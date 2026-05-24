@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aula de IA do Zero — Yuri Chaves | 21 de Junho</title>
+  <meta name="description" content="Aprenda Inteligência Artificial do zero em 1 aula ao vivo com Yuri Chaves. Sábado, 21 de junho às 10h. Apenas R$49,90." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #05050f;
+      --surface: #0e0e22;
+      --surface2: #13132e;
+      --border: rgba(120,100,255,0.18);
+      --purple: #7c5cfc;
+      --purple-light: #a78bfa;
+      --cyan: #22d3ee;
+      --gold: #f59e0b;
+      --text: #f0eeff;
+      --muted: #8884a8;
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(5,5,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-weight: 800; font-size: 1.1rem; letter-spacing: -0.5px; }
+    .logo span { color: var(--purple-light); }
+    header .cta-sm {
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+    header .cta-sm:hover { opacity: .85; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(124,92,252,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(124,92,252,0.15);
+      border: 1px solid rgba(124,92,252,0.35);
+      color: var(--purple-light);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 28px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .badge::before { content: '🔴'; font-size: 0.7rem; }
+    .hero h1 {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      max-width: 820px;
+      margin-bottom: 24px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--purple-light), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 580px;
+      margin-bottom: 40px;
+    }
+    .event-info {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .event-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .event-chip .icon { font-size: 1.1rem; }
+
+    /* ─── COUNTDOWN ─── */
+    .countdown {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 44px;
+      flex-wrap: wrap;
+    }
+    .countdown-unit {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      min-width: 80px;
+      text-align: center;
+    }
+    .countdown-num {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--purple-light);
+      line-height: 1;
+      display: block;
+    }
+    .countdown-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* ─── PRIMARY CTA ─── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #7c5cfc, #5b8af7);
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: 18px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 8px 40px rgba(124,92,252,0.4);
+      letter-spacing: -0.3px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 50px rgba(124,92,252,0.55);
+    }
+    .price-tag {
+      display: inline-block;
+      background: rgba(245,158,11,0.15);
+      border: 1px solid rgba(245,158,11,0.35);
+      color: var(--gold);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-top: 16px;
+    }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 80px 24px; }
+    .container { max-width: 960px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--purple-light);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.7rem, 4vw, 2.5rem);
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 560px;
+      margin-bottom: 52px;
+    }
+
+    /* ─── FOR WHOM ─── */
+    .for-whom { background: var(--surface); }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: border-color .2s, transform .2s;
+    }
+    .card:hover {
+      border-color: var(--purple);
+      transform: translateY(-3px);
+    }
+    .card-icon { font-size: 2rem; margin-bottom: 16px; }
+    .card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    .card p { color: var(--muted); font-size: 0.95rem; }
+
+    /* ─── WHAT YOU'LL LEARN ─── */
+    .learn-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .learn-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+    }
+    .learn-num {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--purple), #5b8af7);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+    }
+    .learn-item h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+    .learn-item p { font-size: 0.875rem; color: var(--muted); }
+
+    /* ─── INSTRUCTOR ─── */
+    .instructor { background: var(--surface); }
+    .instructor-inner {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+    .instructor-photo {
+      flex-shrink: 0;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      border: 3px solid rgba(124,92,252,0.4);
+      overflow: hidden;
+    }
+    .instructor-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .instructor-text { flex: 1; min-width: 280px; }
+    .instructor-text h3 { font-size: 1.6rem; font-weight: 900; margin-bottom: 8px; }
+    .instructor-text .role {
+      color: var(--purple-light);
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+    .instructor-text p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+
+    /* ─── OFFER ─── */
+    .offer-box {
+      background: var(--surface);
+      border: 1px solid rgba(124,92,252,0.3);
+      border-radius: 24px;
+      padding: 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .offer-box::before {
+      content: '';
+      position: absolute;
+      top: -100px; left: 50%;
+      transform: translateX(-50%);
+      width: 400px; height: 300px;
+      background: radial-gradient(circle, rgba(124,92,252,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .offer-price {
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -2px;
+      line-height: 1;
+      margin: 16px 0;
+    }
+    .offer-price sup { font-size: 1.5rem; vertical-align: super; }
+    .offer-includes {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+      margin: 28px 0 36px;
+    }
+    .include-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+    }
+    .include-item::before { content: '✓'; color: var(--cyan); font-weight: 800; }
+    .offer-guarantee {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 16px;
+    }
+
+    /* ─── FORM SECTION ─── */
+    .form-section { background: var(--surface2); }
+    .form-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 48px;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+    .form-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; text-align: center; }
+    .form-sub { color: var(--muted); font-size: 0.9rem; text-align: center; margin-bottom: 32px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--purple-light);
+      margin-bottom: 8px;
+      letter-spacing: 0.3px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color .2s;
+      -webkit-appearance: none;
+    }
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%238884a8' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 14px;
+      cursor: pointer;
+    }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--purple);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: #444466; }
+    .btn-form {
+      width: 100%;
+      padding: 17px;
+      background: linear-gradient(135deg, #7c5cfc, #5b8af7);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 6px 30px rgba(124,92,252,0.4);
+      margin-top: 8px;
+      letter-spacing: -0.2px;
+    }
+    .btn-form:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(124,92,252,0.55); }
+    .form-footer-note {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 14px;
+    }
+
+    /* ─── ORDER BUMP ─── */
+    .order-bump {
+      border: 2px dashed rgba(245,158,11,0.5);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+      margin-bottom: 20px;
+      background: rgba(245,158,11,0.05);
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .order-bump.selected {
+      border-color: var(--gold);
+      background: rgba(245,158,11,0.1);
+    }
+    .order-bump input[type="checkbox"] {
+      width: 20px; height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+    .order-bump-label { flex: 1; }
+    .order-bump-label strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .order-bump-label span {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .order-bump-price {
+      flex-shrink: 0;
+      text-align: right;
+    }
+    .order-bump-price .old { font-size: 0.75rem; color: var(--muted); text-decoration: line-through; }
+    .order-bump-price .new { font-size: 1.1rem; font-weight: 800; color: var(--gold); }
+
+
+    /* ─── SUCCESS STATE ─── */
+    #success-state {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+    .success-icon { font-size: 3.5rem; margin-bottom: 16px; }
+    #success-state h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; }
+    #success-state p { color: var(--muted); font-size: 0.95rem; margin-bottom: 28px; }
+    .btn-payment {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #00b548, #007f32);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 800;
+      padding: 17px 36px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 6px 30px rgba(0,181,72,0.35);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-payment:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(0,181,72,0.5); }
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      color: #25d366;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .btn-whatsapp:hover { text-decoration: underline; }
+
+    /* ─── FAQ ─── */
+    .faq { background: var(--surface); }
+    .faq-list { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+    details {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    details[open] { border-color: var(--purple); }
+    summary {
+      padding: 18px 24px;
+      font-weight: 700;
+      font-size: 0.97rem;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: '+';
+      font-size: 1.3rem;
+      color: var(--purple-light);
+      flex-shrink: 0;
+      transition: transform .2s;
+    }
+    details[open] summary::after { transform: rotate(45deg); }
+    .faq-body { padding: 0 24px 20px; color: var(--muted); font-size: 0.92rem; line-height: 1.7; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+    footer .logo { margin-bottom: 10px; font-size: 1rem; }
+    footer a { color: var(--muted); text-decoration: underline; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 600px) {
+      .offer-box { padding: 32px 24px; }
+      .form-box { padding: 32px 20px; }
+      .instructor-inner { flex-direction: column; text-align: center; }
+      .countdown-num { font-size: 1.7rem; }
+      .countdown-unit { min-width: 62px; padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Yuri <span>Chaves</span></div>
+  <a href="#inscricao" class="cta-sm">Garantir vaga →</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">Aula ao vivo · 21 de junho</div>
+  <h1>Aprenda <em>Inteligência Artificial</em><br>do Zero em 1 Aula</h1>
+  <p>Sem precisar saber programar. Sem enrolação. Em 1 sábado você entende IA de verdade e começa a usar no seu trabalho e carreira.</p>
+
+  <div class="event-info">
+    <div class="event-chip"><span class="icon">📅</span> Sábado, 21 de junho de 2026</div>
+    <div class="event-chip"><span class="icon">🕙</span> 10h00 (horário de Brasília)</div>
+    <div class="event-chip"><span class="icon">💻</span> 100% Online ao vivo</div>
+  </div>
+
+  <div class="countdown" id="countdown">
+    <div class="countdown-unit"><span class="countdown-num" id="cd-days">--</span><span class="countdown-label">Dias</span></div>
+    <div class="countdown-unit"><span class="countdown-num" id="cd-hours">--</span><span class="countdown-label">Horas</span></div>
+    <div class="countdown-unit"><span class="countdown-num" id="cd-minutes">--</span><span class="countdown-label">Min</span></div>
+    <div class="countdown-unit"><span class="countdown-num" id="cd-seconds">--</span><span class="countdown-label">Seg</span></div>
+  </div>
+
+  <a href="#inscricao" class="btn-primary">🚀 Quero minha vaga por R$49,90</a>
+  <span class="price-tag">⚡ Vagas limitadas — garante logo</span>
+</section>
+
+<!-- PARA QUEM É -->
+<section class="for-whom">
+  <div class="container">
+    <p class="section-label">Para quem é</p>
+    <h2 class="section-title">Essa aula foi feita pra você se…</h2>
+    <p class="section-sub">Não importa sua área ou nível técnico. Se você quer usar IA a seu favor, esse é o lugar certo.</p>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🔄</div>
+        <h3>Está em transição de carreira</h3>
+        <p>Quer entrar em uma nova área e sabe que dominar IA vai ser seu maior diferencial competitivo.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌱</div>
+        <h3>É iniciante em tecnologia</h3>
+        <p>Nunca programou, nunca usou IA de verdade e quer começar do zero sem se sentir perdido.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">😰</div>
+        <h3>Sente que está ficando pra trás</h3>
+        <p>Vê todo mundo falando de IA e não sabe por onde começar — isso vai acabar aqui.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <h3>Quer usar IA no trabalho hoje</h3>
+        <p>Busca ferramentas práticas que já pode aplicar na segunda-feira, não teoria que fica no papel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- O QUE VOCÊ VAI APRENDER -->
+<section>
+  <div class="container">
+    <p class="section-label">Conteúdo</p>
+    <h2 class="section-title">O que você vai aprender nessa aula</h2>
+    <p class="section-sub">Conteúdo prático e direto ao ponto. Sem blá-blá-blá.</p>
+    <div class="learn-grid">
+      <div class="learn-item">
+        <div class="learn-num">1</div>
+        <div>
+          <h4>O que é IA de verdade (sem mitos)</h4>
+          <p>Entenda como funciona a inteligência artificial sem precisar de formação técnica.</p>
+        </div>
+      </div>
+      <div class="learn-item">
+        <div class="learn-num">2</div>
+        <div>
+          <h4>As ferramentas que estão mudando o mercado</h4>
+          <p>ChatGPT, Claude, Gemini e outras — quando e como usar cada uma.</p>
+        </div>
+      </div>
+      <div class="learn-item">
+        <div class="learn-num">3</div>
+        <div>
+          <h4>Como criar prompts que realmente funcionam</h4>
+          <p>O segredo para extrair o máximo da IA e economizar horas no seu trabalho.</p>
+        </div>
+      </div>
+      <div class="learn-item">
+        <div class="learn-num">4</div>
+        <div>
+          <h4>IA aplicada à sua carreira e rotina</h4>
+          <p>Cases reais de como profissionais estão usando IA para crescer e se diferenciar.</p>
+        </div>
+      </div>
+      <div class="learn-item">
+        <div class="learn-num">5</div>
+        <div>
+          <h4>Seu plano de ação pós-aula</h4>
+          <p>Você sai com próximos passos claros para continuar evoluindo sozinho.</p>
+        </div>
+      </div>
+      <div class="learn-item">
+        <div class="learn-num">6</div>
+        <div>
+          <h4>Sessão de perguntas ao vivo</h4>
+          <p>Tire todas as suas dúvidas diretamente comigo em tempo real.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTRUTOR -->
+<section class="instructor">
+  <div class="container">
+    <div class="instructor-inner">
+      <div class="instructor-photo">🧑‍💻</div>
+      <div class="instructor-text">
+        <p class="section-label">Seu instrutor</p>
+        <h3>Yuri Chaves</h3>
+        <p class="role">Especialista em IA aplicada à carreira</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+          <span style="background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.3);color:#22d3ee;font-size:0.75rem;font-weight:700;padding:4px 12px;border-radius:50px;letter-spacing:0.3px;">🏢 Gerente Sr. em multinacional</span>
+          <span style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:var(--gold);font-size:0.75rem;font-weight:700;padding:4px 12px;border-radius:50px;letter-spacing:0.3px;">⚡ +10 anos de experiência</span>
+        </div>
+        <p style="color:var(--muted);font-size:0.95rem;line-height:1.75;margin-bottom:14px;">
+          Gerente Regional de Vendas com mais de 10 anos na indústria de bens de consumo, liderando operações multirregionais de alta complexidade.
+        </p>
+        <p style="color:var(--muted);font-size:0.95rem;line-height:1.75;margin-bottom:14px;">
+          Ao longo dessa trajetória, descobri como iniciativas podem transformar carreiras, negócios e resultados — fui promovido algumas vezes nas minhas passagens por empresas como <strong style="color:var(--text)">P&G, General Mills e Duracell</strong>. Com a experiência de vários cases de mentoria para promoção e migração de carreira, criei um modelo para <strong style="color:var(--text)">ensinar IA de forma prática</strong>, sem precisar de background técnico.
+        </p>
+        <p style="color:var(--muted);font-size:0.95rem;line-height:1.75;">
+          Acredito que resultado sustentável é consequência de clareza de prioridades, gente bem desenvolvida e execução consistente.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFERTA -->
+<section>
+  <div class="container">
+    <div class="offer-box">
+      <p class="section-label" style="text-align:center">Sua vaga</p>
+      <h2 class="section-title" style="text-align:center">Invista na sua evolução</h2>
+      <div class="offer-price"><sup>R$</sup>49<span style="font-size:2rem">,90</span></div>
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:4px">pagamento único · acesso garantido</p>
+      <div class="offer-includes">
+        <div class="include-item">Aula ao vivo de 2h com Yuri Chaves</div>
+        <div class="include-item">Sessão de perguntas e respostas ao vivo</div>
+        <div class="include-item">Materiais de apoio exclusivos</div>
+        <div class="include-item">Grupo no WhatsApp para avisos e suporte</div>
+        <div class="include-item">Certificado de participação</div>
+      </div>
+      <a href="#inscricao" class="btn-primary">🚀 Garantir minha vaga agora</a>
+      <p class="offer-guarantee">🔒 Pagamento seguro via Mercado Pago · Pix, cartão ou boleto</p>
+    </div>
+  </div>
+</section>
+
+<!-- FORMULÁRIO -->
+<section class="form-section" id="inscricao">
+  <div class="container">
+    <div class="form-box">
+
+      <!-- Formulário -->
+      <div id="form-state">
+        <p class="form-title">Garanta sua vaga agora</p>
+        <p class="form-sub">Preencha abaixo e finalize seu pagamento de R$49,90 para confirmar sua inscrição.</p>
+
+        <form id="signup-form" novalidate>
+          <div class="form-group">
+            <label for="nome">Seu nome completo</label>
+            <input type="text" id="nome" name="nome" placeholder="Ex: Maria Silva" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Seu melhor e-mail</label>
+            <input type="email" id="email" name="email" placeholder="seu@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="whatsapp">WhatsApp (com DDD)</label>
+            <input type="tel" id="whatsapp" name="whatsapp" placeholder="(11) 99999-9999" required />
+          </div>
+          <div class="form-group">
+            <label for="dificuldade">Qual sua maior dificuldade com IA hoje?</label>
+            <select id="dificuldade" name="dificuldade" required>
+              <option value="" disabled selected>Selecione uma opção…</option>
+              <option value="nao-sei-comecar">Não sei por onde começar</option>
+              <option value="muito-tecnico">Parece muito técnico e complicado</option>
+              <option value="sem-tempo">Não tenho tempo para aprender</option>
+              <option value="nao-vejo-aplicacao">Não sei como aplicar no meu trabalho</option>
+              <option value="medo-ficar-defasado">Medo de ficar defasado no mercado</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+          <!-- ORDER BUMP -->
+          <label class="order-bump" id="bump-box">
+            <input type="checkbox" id="bump-check" />
+            <div class="order-bump-label">
+              <strong>🎬 Sim! Quero também a gravação da aula</strong>
+              <span>Assista quantas vezes quiser, no seu ritmo. Parcelamento em até 3x sem juros.</span>
+            </div>
+            <div class="order-bump-price">
+              <div class="old">R$49,90</div>
+              <div class="new">R$69,90</div>
+            </div>
+          </label>
+
+          <button type="submit" class="btn-form" id="btn-submit">🚀 Garantir minha vaga por R$49,90</button>
+        </form>
+
+        <p class="form-footer-note">🔒 Dados protegidos. Após o cadastro você é redirecionado para o pagamento seguro.</p>
+      </div>
+
+      <!-- Estado de sucesso -->
+      <div id="success-state">
+        <div class="success-icon">🎉</div>
+        <h3>Quase lá! Finalize seu pagamento</h3>
+        <p>Seus dados foram salvos. Agora complete o pagamento para confirmar sua vaga. Você receberá o link da aula pelo WhatsApp.</p>
+
+        <a href="https://mpago.li/1jAQ5qe" target="_blank" class="btn-payment" id="btn-payment-final">
+          💳 Pagar <span id="pay-label">R$49,90</span> agora
+        </a>
+        <br>
+        <a href="https://wa.me/5583982077042?text=Ol%C3%A1%20Yuri!%20Acabei%20de%20me%20inscrever%20na%20aula%20de%20IA." target="_blank" class="btn-whatsapp">
+          💬 Falar no WhatsApp se tiver dúvidas
+        </a>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <p class="section-label" style="text-align:center">Dúvidas</p>
+    <h2 class="section-title" style="text-align:center;margin-bottom:40px">Perguntas frequentes</h2>
+    <div class="faq-list">
+      <details>
+        <summary>Preciso saber programar para participar?</summary>
+        <div class="faq-body">Não! A aula foi pensada para quem nunca teve contato com programação ou IA. Você vai aprender do zero, com linguagem simples e exemplos práticos do dia a dia.</div>
+      </details>
+      <details>
+        <summary>Vou receber a gravação se não puder assistir ao vivo?</summary>
+        <div class="faq-body">O foco é a experiência ao vivo com sessão de perguntas e respostas. Fique de olho no nosso grupo do WhatsApp para informações sobre replay — recomendamos fortemente a presença ao vivo.</div>
+      </details>
+      <details>
+        <summary>Como recebo o link da aula após o pagamento?</summary>
+        <div class="faq-body">Depois de confirmar o pagamento, você será adicionado ao grupo do WhatsApp onde enviaremos todas as informações e o link da aula antes do evento.</div>
+      </details>
+      <details>
+        <summary>Quais formas de pagamento são aceitas?</summary>
+        <div class="faq-body">Aceitamos Pix (aprovação imediata), cartão de crédito e boleto bancário — tudo processado de forma segura pelo Mercado Pago.</div>
+      </details>
+      <details>
+        <summary>E se eu tiver dúvidas antes da aula?</summary>
+        <div class="faq-body">Pode falar comigo diretamente pelo WhatsApp. Após a inscrição você entra no grupo e terá suporte até o dia da aula.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Yuri <span style="color:var(--purple-light)">Chaves</span></div>
+  <p>© 2026 Yuri Chaves · <a href="https://yurichaves.com.br" target="_blank">yurichaves.com.br</a></p>
+  <p style="margin-top:6px">Dúvidas? <a href="https://wa.me/5583982077042" target="_blank">Fale pelo WhatsApp</a></p>
+</footer>
+
+<script>
+  // ─── COUNTDOWN ───
+  (function() {
+    var target = new Date('2026-06-21T10:00:00-03:00').getTime();
+    function update() {
+      var now = Date.now();
+      var diff = target - now;
+      if (diff <= 0) {
+        document.getElementById('countdown').innerHTML = '<div class="countdown-unit" style="min-width:200px"><span class="countdown-num" style="font-size:1.4rem">🎉 Ao vivo agora!</span></div>';
+        return;
+      }
+      var d = Math.floor(diff / 86400000);
+      var h = Math.floor((diff % 86400000) / 3600000);
+      var m = Math.floor((diff % 3600000) / 60000);
+      var s = Math.floor((diff % 60000) / 1000);
+      document.getElementById('cd-days').textContent    = String(d).padStart(2,'0');
+      document.getElementById('cd-hours').textContent   = String(h).padStart(2,'0');
+      document.getElementById('cd-minutes').textContent = String(m).padStart(2,'0');
+      document.getElementById('cd-seconds').textContent = String(s).padStart(2,'0');
+    }
+    update();
+    setInterval(update, 1000);
+  })();
+
+  // ─── ORDER BUMP ───
+  var MP_BASICO   = 'https://mpago.li/1jAQ5qe';
+  var MP_GRAVACAO = 'https://mpago.la/1tzzfJq';
+
+  var bumpCheck = document.getElementById('bump-check');
+  var bumpBox   = document.getElementById('bump-box');
+  var btnSubmit = document.getElementById('btn-submit');
+
+  bumpCheck.addEventListener('change', function() {
+    if (this.checked) {
+      bumpBox.classList.add('selected');
+      btnSubmit.textContent = '🚀 Garantir minha vaga por R$69,90 (com gravação)';
+    } else {
+      bumpBox.classList.remove('selected');
+      btnSubmit.textContent = '🚀 Garantir minha vaga por R$49,90';
+    }
+  });
+
+  // ─── WHATSAPP MASK ───
+  document.getElementById('whatsapp').addEventListener('input', function(e) {
+    var v = e.target.value.replace(/\D/g,'');
+    if (v.length <= 10) v = v.replace(/(\d{2})(\d{4})(\d{0,4})/,'($1) $2-$3');
+    else v = v.replace(/(\d{2})(\d{5})(\d{0,4})/,'($1) $2-$3');
+    e.target.value = v.trim().replace(/-$/,'');
+  });
+
+  // ─── FORM SUBMIT ───
+  document.getElementById('signup-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var nome       = document.getElementById('nome').value.trim();
+    var email      = document.getElementById('email').value.trim();
+    var whatsapp   = document.getElementById('whatsapp').value.trim();
+    var dificuldade= document.getElementById('dificuldade').value;
+
+    // Basic validation
+    if (!nome || !email || !whatsapp || !dificuldade) {
+      alert('Por favor, preencha todos os campos antes de continuar.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      alert('Por favor, informe um e-mail válido.');
+      return;
+    }
+
+    var comGravacao = document.getElementById('bump-check').checked;
+
+    // Update payment button based on bump selection
+    var btnFinal = document.getElementById('btn-payment-final');
+    var payLabel = document.getElementById('pay-label');
+    if (comGravacao) {
+      btnFinal.href        = MP_GRAVACAO;
+      payLabel.textContent = 'R$69,90';
+    } else {
+      btnFinal.href        = MP_BASICO;
+      payLabel.textContent = 'R$49,90';
+    }
+
+    // Send form data to Formspree (email notification)
+    fetch('https://formspree.io/f/mlgvlzyd', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nome:        nome,
+        email:       email,
+        whatsapp:    whatsapp,
+        dificuldade: dificuldade,
+        plano:       comGravacao ? 'Com gravação — R$69,90' : 'Sem gravação — R$49,90'
+      })
+    }).catch(function() {}); // falha silenciosa — não bloqueia o fluxo
+
+    // Show success state
+    document.getElementById('form-state').style.display = 'none';
+    document.getElementById('success-state').style.display = 'block';
+    document.getElementById('inscricao').scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

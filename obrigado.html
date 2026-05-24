@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pagamento Confirmado — Yuri Chaves</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #05050f;
+      --surface: #0e0e22;
+      --border: rgba(120,100,255,0.18);
+      --purple: #7c5cfc;
+      --purple-light: #a78bfa;
+      --cyan: #22d3ee;
+      --gold: #f59e0b;
+      --text: #f0eeff;
+      --muted: #8884a8;
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    /* Confetti particles */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -100px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 600px;
+      background: radial-gradient(circle, rgba(124,92,252,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 48px 40px;
+      max-width: 560px;
+      width: 100%;
+    }
+
+    .success-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      display: block;
+      animation: pop .5s ease;
+    }
+
+    @keyframes pop {
+      0%   { transform: scale(0.5); opacity: 0; }
+      80%  { transform: scale(1.15); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .badge-success {
+      display: inline-block;
+      background: rgba(0,181,72,0.15);
+      border: 1px solid rgba(0,181,72,0.35);
+      color: #00b548;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 50px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: -0.8px;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+
+    .info-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      margin-bottom: 32px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+
+    .info-row .icon { font-size: 1.1rem; flex-shrink: 0; }
+    .info-row span { color: var(--muted); }
+    .info-row strong { color: var(--text); }
+
+    /* DIVIDER */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+
+    /* UPSELL */
+    .upsell-label {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--purple), #5b8af7);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 50px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+
+    .upsell-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      line-height: 1.35;
+      margin-bottom: 12px;
+    }
+
+    .upsell-title em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--purple-light), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .upsell-body {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .bullets {
+      list-style: none;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .bullets li::before {
+      content: '✓';
+      color: var(--cyan);
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .btn-upsell {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #7c5cfc, #5b8af7);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 800;
+      padding: 16px 30px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 6px 30px rgba(124,92,252,0.4);
+      transition: transform .2s, box-shadow .2s;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .btn-upsell:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(124,92,252,0.55);
+    }
+
+    .skip {
+      display: block;
+      margin-top: 14px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .skip:hover { text-decoration: underline; }
+
+    footer {
+      margin-top: 32px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 32px 20px; }
+      h1 { font-size: 1.45rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+
+    <!-- CONFIRMAÇÃO -->
+    <span class="success-icon">🎉</span>
+    <span class="badge-success">✅ Pagamento confirmado</span>
+    <h1>Sua vaga está garantida!</h1>
+    <p class="sub">Obrigado pela sua inscrição. Você receberá todas as informações da aula pelo <strong>WhatsApp</strong> nos próximos dias.</p>
+
+    <div class="info-box">
+      <div class="info-row">
+        <span class="icon">📅</span>
+        <span><strong>Data:</strong> Sábado, 21 de junho de 2026</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">🕙</span>
+        <span><strong>Horário:</strong> 10h00 (horário de Brasília)</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">💻</span>
+        <span><strong>Formato:</strong> 100% online ao vivo</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">📲</span>
+        <span><strong>Link da aula:</strong> enviado pelo WhatsApp antes do evento</span>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- UPSELL: MENTORIA INDIVIDUAL -->
+    <span class="upsell-label">✨ Oferta exclusiva para quem acabou de comprar</span>
+    <p class="upsell-title">Quer acelerar sua carreira com uma <em>mentoria individual</em> com quem foi promovido 5 vezes em multinacionais gigantes?</p>
+
+    <p class="upsell-body">Yuri Chaves passou por <strong>P&G, General Mills e Duracell</strong> — e ao longo dessa trajetória desenvolveu um método para ajudar profissionais a se posicionarem melhor, serem promovidos e migrarem de carreira com estratégia. Agora você pode ter uma sessão 1:1 personalizada para a sua realidade.</p>
+
+    <ul class="bullets">
+      <li>Diagnóstico completo da sua situação de carreira</li>
+      <li>Plano de ação personalizado para promoção ou migração</li>
+      <li>Como usar IA como diferencial competitivo real</li>
+      <li>Acesso direto a um executivo com 10+ anos em multinacionais</li>
+    </ul>
+
+    <a href="https://wa.me/5583982077042?text=Ol%C3%A1%20Yuri!%20Acabei%20de%20confirmar%20minha%20inscri%C3%A7%C3%A3o%20na%20aula%20e%20tenho%20interesse%20na%20mentoria%20individual%20de%20carreira.%20Pode%20me%20contar%20mais%3F" target="_blank" class="btn-upsell">
+      💬 Quero saber mais sobre a mentoria
+    </a>
+
+    <a href="https://yurichaves.com.br" class="skip">Não, obrigado — voltar ao site</a>
+
+  </div>
+
+  <footer>© 2026 Yuri Chaves · yurichaves.com.br</footer>
+
+</body>
+</html>
