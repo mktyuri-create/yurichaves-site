@@ -126,6 +126,10 @@ nav{
 }
 .hero-cta:hover{box-shadow:0 0 60px rgba(168,85,247,0.7);transform:translateY(-2px)}
 
+.hero-cta-group{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px}
+.hero-cta-outline{display:inline-flex;align-items:center;gap:12px;font-size:0.78rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;text-decoration:none;color:var(--violet-light);border:1px solid rgba(168,85,247,0.5);background:rgba(168,85,247,0.08);padding:16px 36px;border-radius:4px;transition:all 0.3s;}
+.hero-cta-outline:hover{background:rgba(168,85,247,0.2);border-color:var(--violet);transform:translateY(-2px)}
+
 .hero-right{
   position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:center;
   padding-top:80px;overflow:hidden;
@@ -501,10 +505,20 @@ footer{
       <span class="badge">Canal Indireto</span>
       <span class="badge">Gestão de Times</span>
     </div>
-    <a class="hero-cta" href="file:///C:/Users/g710931/Downloads/yuri-chaves_7.html#trajetoria">
+    <a class="hero-cta" href="#trajetoria">
       Ver trajetória
       <svg width="18" height="10" viewBox="0 0 18 10" fill="none"><path d="M1 5h16M12 1l5 4-5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
     </a>
+    <div class="hero-cta-group">
+      <a class="hero-cta" href="/landing-mentoria-carreira">
+        Mentoria
+        <svg width="16" height="10" viewBox="0 0 18 10" fill="none"><path d="M1 5h16M12 1l5 4-5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </a>
+      <a class="hero-cta-outline" href="/aula-ia">
+        Aula de IA
+        <svg width="16" height="10" viewBox="0 0 18 10" fill="none"><path d="M1 5h16M12 1l5 4-5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </a>
+    </div>
   </div>
   <div class="hero-right">
     <div class="photo-wrap">
@@ -883,4 +897,4 @@ document.querySelectorAll('.edu-card').forEach((el,i)=>{el.dataset.d=i*100;obs.o
 document.querySelectorAll('.num-item').forEach((el,i)=>{el.dataset.d=i*100;obs.observe(el)});
 </script>
 
-</body></html>
+</body></html> 

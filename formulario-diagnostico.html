@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Diagnóstico de Carreira — Yuri Chaves</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #f7f7f5;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    .hero {
+      background: #0f0f0f;
+      color: #fff;
+      padding: 56px 24px 48px;
+      text-align: center;
+    }
+
+    .hero .badge {
+      display: inline-block;
+      background: #2563eb;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(24px, 5vw, 38px);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      font-size: 16px;
+      color: #aaa;
+      max-width: 540px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .form-wrap {
+      max-width: 680px;
+      margin: 48px auto 80px;
+      padding: 0 20px;
+    }
+
+    .step {
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 24px;
+      border: 1px solid #e8e8e8;
+    }
+
+    .step-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #2563eb;
+      margin-bottom: 8px;
+    }
+
+    .step h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: #0f0f0f;
+      line-height: 1.4;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #222;
+    }
+
+    label .hint {
+      font-weight: 400;
+      color: #888;
+      font-size: 13px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea,
+    select {
+      width: 100%;
+      border: 1.5px solid #ddd;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-family: inherit;
+      color: #1a1a1a;
+      background: #fafafa;
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+      background: #fff;
+    }
+
+    textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+    .radio-group, .check-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .radio-group label,
+    .check-group label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-weight: 400;
+      cursor: pointer;
+      padding: 12px 14px;
+      border: 1.5px solid #ddd;
+      border-radius: 10px;
+      background: #fafafa;
+      transition: border-color .15s, background .15s;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .radio-group label:hover,
+    .check-group label:hover {
+      border-color: #2563eb;
+      background: #f0f5ff;
+    }
+
+    .radio-group input,
+    .check-group input {
+      width: auto;
+      margin-top: 2px;
+      accent-color: #2563eb;
+      flex-shrink: 0;
+    }
+
+    .scale-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .scale-group label {
+      flex: 1;
+      min-width: 44px;
+      text-align: center;
+      padding: 10px 6px;
+      border: 1.5px solid #ddd;
+      border-radius: 10px;
+      background: #fafafa;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all .15s;
+    }
+
+    .scale-group label:hover { border-color: #2563eb; background: #f0f5ff; }
+    .scale-group input { display: none; }
+    .scale-group input:checked + span { color: #2563eb; }
+    .scale-group label:has(input:checked) {
+      border-color: #2563eb;
+      background: #eff6ff;
+      color: #2563eb;
+    }
+
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #999;
+      margin-top: 6px;
+    }
+
+    .submit-wrap {
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .submit-wrap p {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    button[type="submit"] {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 16px 40px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+      width: 100%;
+      max-width: 360px;
+    }
+
+    button[type="submit"]:hover { background: #1d4ed8; transform: translateY(-1px); }
+    button[type="submit"]:active { transform: none; }
+
+    .success {
+      display: none;
+      background: #fff;
+      border: 1.5px solid #86efac;
+      border-radius: 16px;
+      padding: 40px 32px;
+      text-align: center;
+    }
+
+    .success .icon { font-size: 40px; margin-bottom: 16px; }
+    .success h3 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+    .success p { color: #555; font-size: 15px; line-height: 1.7; }
+
+    @media (max-width: 480px) {
+      .step { padding: 24px 18px; }
+      .hero { padding: 40px 20px 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">Mentoria de Carreira</div>
+  <h1>Diagnóstico Pré-Sessão</h1>
+  <p>Responda com calma e honestidade. Suas respostas vão guiar toda a nossa primeira conversa — quanto mais detalhe, mais aproveitamos o tempo juntos.</p>
+</div>
+
+<div class="form-wrap">
+  <form id="diagForm">
+    <input type="hidden" name="_subject" value="Diagnóstico — Novo mentorado">
+    <input type="hidden" name="origem_formulario" value="diagnostico">
+
+    <!-- BLOCO 1: Dados pessoais -->
+    <div class="step">
+      <div class="step-label">Bloco 1 de 5</div>
+      <h2>Vamos começar com o básico</h2>
+
+      <div class="field">
+        <label for="nome">Seu nome completo</label>
+        <input type="text" id="nome" name="nome" placeholder="Como você prefere ser chamado(a)?" required />
+      </div>
+
+      <div class="field">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="seu@email.com" required />
+      </div>
+
+      <div class="field">
+        <label for="whatsapp">WhatsApp <span class="hint">(com DDD)</span></label>
+        <input type="tel" id="whatsapp" name="whatsapp" placeholder="(00) 00000-0000" />
+      </div>
+
+      <div class="field">
+        <label for="profissao">Qual é sua profissão ou área de atuação hoje?</label>
+        <input type="text" id="profissao" name="profissao" placeholder="Ex: Analista de marketing, Engenheira civil, Autônoma..." required />
+      </div>
+
+      <div class="field">
+        <label for="tempo_area">Há quanto tempo você está nessa área?</label>
+        <select id="tempo_area" name="tempo_area">
+          <option value="">Selecione...</option>
+          <option>Menos de 1 ano</option>
+          <option>1 a 3 anos</option>
+          <option>3 a 7 anos</option>
+          <option>7 a 15 anos</option>
+          <option>Mais de 15 anos</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- BLOCO 2: Situação atual -->
+    <div class="step">
+      <div class="step-label">Bloco 2 de 5</div>
+      <h2>Como está a sua carreira agora?</h2>
+
+      <div class="field">
+        <label>Como você descreveria sua situação profissional atual?</label>
+        <div class="radio-group">
+          <label><input type="radio" name="situacao" value="empregado_satisfeito" /> <span>Estou empregado(a) e satisfeito(a), mas quero crescer</span></label>
+          <label><input type="radio" name="situacao" value="empregado_insatisfeito" /> <span>Estou empregado(a) mas insatisfeito(a) ou estagnado(a)</span></label>
+          <label><input type="radio" name="situacao" value="transicao" /> <span>Quero mudar de área ou profissão</span></label>
+          <label><input type="radio" name="situacao" value="desempregado" /> <span>Estou desempregado(a) e em busca de recolocação</span></label>
+          <label><input type="radio" name="situacao" value="autonomo" /> <span>Trabalho por conta própria e quero evoluir o negócio</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="maior_dor">Qual é o maior problema ou desafio da sua carreira hoje? <span class="hint">Seja honesto(a) — isso é o que mais importa.</span></label>
+        <textarea id="maior_dor" name="maior_dor" placeholder="Descreva com suas próprias palavras o que está travando você..." required></textarea>
+      </div>
+
+      <div class="field">
+        <label>Numa escala de 1 a 5, como você avalia sua satisfação profissional hoje?</label>
+        <div class="scale-group">
+          <label><input type="radio" name="satisfacao" value="1" /><span>1</span></label>
+          <label><input type="radio" name="satisfacao" value="2" /><span>2</span></label>
+          <label><input type="radio" name="satisfacao" value="3" /><span>3</span></label>
+          <label><input type="radio" name="satisfacao" value="4" /><span>4</span></label>
+          <label><input type="radio" name="satisfacao" value="5" /><span>5</span></label>
+        </div>
+        <div class="scale-labels"><span>Muito insatisfeito(a)</span><span>Muito satisfeito(a)</span></div>
+      </div>
+    </div>
+
+    <!-- BLOCO 3: Objetivos -->
+    <div class="step">
+      <div class="step-label">Bloco 3 de 5</div>
+      <h2>Para onde você quer ir?</h2>
+
+      <div class="field">
+        <label for="objetivo_principal">Se daqui a 3 meses a mentoria tiver valido muito a pena, o que terá mudado na sua carreira?</label>
+        <textarea id="objetivo_principal" name="objetivo_principal" placeholder="Descreva o resultado ideal que você quer alcançar..." required></textarea>
+      </div>
+
+      <div class="field">
+        <label>Quais desses temas são mais urgentes para você agora? <span class="hint">(Pode marcar mais de um)</span></label>
+        <div class="check-group">
+          <label><input type="checkbox" name="temas" value="autoconhecimento" /> <span>Autoconhecimento e clareza sobre o que quero</span></label>
+          <label><input type="checkbox" name="temas" value="posicionamento" /> <span>Posicionamento e marca pessoal no mercado</span></label>
+          <label><input type="checkbox" name="temas" value="transicao" /> <span>Transição de carreira ou área</span></label>
+          <label><input type="checkbox" name="temas" value="crescimento" /> <span>Crescimento, promoção ou aumento dentro da carreira atual</span></label>
+          <label><input type="checkbox" name="temas" value="ia" /> <span>Usar IA para ser mais produtivo(a) e competitivo(a)</span></label>
+          <label><input type="checkbox" name="temas" value="empreendedorismo" /> <span>Empreendedorismo ou trabalho autônomo</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="obstaculos">O que você já tentou fazer para resolver isso e não funcionou?</label>
+        <textarea id="obstaculos" name="obstaculos" placeholder="Cursos, tentativas, conversas... o que já rolou?"></textarea>
+      </div>
+    </div>
+
+    <!-- BLOCO 4: Contexto pessoal -->
+    <div class="step">
+      <div class="step-label">Bloco 4 de 5</div>
+      <h2>Um pouco mais sobre você</h2>
+
+      <div class="field">
+        <label for="superpoder">Qual é sua maior habilidade ou ponto forte profissional? <span class="hint">(O que as pessoas costumam te elogiar ou pedir ajuda?)</span></label>
+        <textarea id="superpoder" name="superpoder" placeholder="Pode ser técnico, comportamental, criativo..."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="fraqueza">Tem algum ponto que você sabe que precisa desenvolver ou que te trava?</label>
+        <textarea id="fraqueza" name="fraqueza" placeholder="Sem julgamento — isso nos ajuda a focar no que importa."></textarea>
+      </div>
+
+      <div class="field">
+        <label>Como você prefere aprender e trabalhar as coisas?</label>
+        <div class="radio-group">
+          <label><input type="radio" name="estilo" value="acao" /> <span>Na prática — aprendo fazendo e errando</span></label>
+          <label><input type="radio" name="estilo" value="reflexao" /> <span>Reflexivo(a) — preciso pensar antes de agir</span></label>
+          <label><input type="radio" name="estilo" value="estrutura" /> <span>Estruturado(a) — gosto de planos e etapas claras</span></label>
+          <label><input type="radio" name="estilo" value="conversa" /> <span>Conversando — processo melhor em diálogo</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Quanto tempo por semana você consegue dedicar à mentoria (estudos, exercícios, aplicações)?</label>
+        <div class="radio-group">
+          <label><input type="radio" name="tempo_semana" value="ate2h" /> <span>Até 2 horas</span></label>
+          <label><input type="radio" name="tempo_semana" value="2a4h" /> <span>2 a 4 horas</span></label>
+          <label><input type="radio" name="tempo_semana" value="4a6h" /> <span>4 a 6 horas</span></label>
+          <label><input type="radio" name="tempo_semana" value="mais6h" /> <span>Mais de 6 horas</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCO 5: Livre -->
+    <div class="step">
+      <div class="step-label">Bloco 5 de 5</div>
+      <h2>Por último...</h2>
+
+      <div class="field">
+        <label for="expectativa_mentor">O que você espera de um mentor? Como gosta de ser acompanhado(a)?</label>
+        <textarea id="expectativa_mentor" name="expectativa_mentor" placeholder="Direto, desafiador, mais suave, estruturado... como funciona melhor pra você?"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Data e hora da nossa primeira sessão</label>
+        <div id="agendamento-opcoes" class="radio-group" style="margin-bottom:12px;">
+          <label><input type="radio" name="agendamento_tipo" value="confirmado" id="agendamento_confirmado" /> <span>Já temos horário confirmado</span></label>
+          <label><input type="radio" name="agendamento_tipo" value="sugerir" id="agendamento_sugerir" /> <span>Ainda não agendamos — quero sugerir um horário</span></label>
+        </div>
+
+        <div id="campo_data_hora" style="display:none;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px;">
+            <div>
+              <label for="data_sessao" style="font-size:13px;color:#666;font-weight:500;margin-bottom:4px;">Data</label>
+              <input type="date" id="data_sessao" name="data_sessao" min="" />
+            </div>
+            <div>
+              <label for="hora_sessao" style="font-size:13px;color:#666;font-weight:500;margin-bottom:4px;">Horário</label>
+              <input type="time" id="hora_sessao" name="hora_sessao" />
+            </div>
+          </div>
+          <p style="font-size:12px;color:#999;margin-top:4px;">Fuso horário de Brasília (BRT). O Yuri confirmará o horário por WhatsApp.</p>
+        </div>
+
+        <div id="campo_sugestao" style="display:none;">
+          <textarea id="sugestao_horario" name="sugestao_horario" placeholder="Ex: prefiro manhãs na terça ou quinta, a partir das 9h..." style="min-height:70px;"></textarea>
+          <p style="font-size:12px;color:#999;margin-top:4px;">O Yuri entrará em contato para confirmar o melhor horário para ambos.</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="linkedin">Perfil do LinkedIn <span class="hint">(obrigatório — vou revisar antes da sessão)</span></label>
+        <input type="text" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/seu-perfil" required />
+      </div>
+
+      <div class="field">
+        <label for="instagram">Perfil do Instagram <span class="hint">(opcional — só se você usa para marca pessoal ou trabalho)</span></label>
+        <input type="text" id="instagram" name="instagram" placeholder="@seu.perfil" />
+      </div>
+
+      <div class="field">
+        <label for="curriculo">Currículo <span class="hint">(PDF — ajuda muito se você está em busca ativa ou quer mudar de área)</span></label>
+        <input type="file" id="curriculo" name="curriculo" accept=".pdf,.doc,.docx" style="padding: 10px 14px; cursor: pointer;" />
+        <p style="font-size: 12px; color: #999; margin-top: 6px;">Formatos aceitos: PDF, DOC, DOCX. Tamanho máximo: 5MB.</p>
+      </div>
+
+      <div class="field">
+        <label for="como_chegou">Como você chegou até a mentoria do Yuri Chaves?</label>
+        <input type="text" id="como_chegou" name="como_chegou" placeholder="Instagram, LinkedIn, indicação, Google..." />
+      </div>
+
+      <div class="field">
+        <label for="livre">Tem algo mais que você queira compartilhar antes da nossa primeira sessão?</label>
+        <textarea id="livre" name="livre" placeholder="Fique à vontade — quanto mais contexto, melhor."></textarea>
+      </div>
+    </div>
+
+    <div class="submit-wrap">
+      <p>Ao enviar, suas respostas chegam diretamente para o Yuri antes da nossa primeira sessão.<br/>Nenhuma informação é compartilhada com terceiros.</p>
+      <button type="submit">Enviar diagnóstico ✓</button>
+    </div>
+
+    <div class="success" id="successMsg">
+      <div class="icon">✅</div>
+      <h3>Diagnóstico recebido!</h3>
+      <p>Obrigado por compartilhar. O Yuri vai revisar suas respostas antes da nossa sessão e chegar muito mais preparado para aproveitar cada minuto do nosso tempo juntos.</p>
+      <div id="cal-wrap" style="margin-top:20px;display:none;">
+        <p style="font-size:14px;color:#555;margin-bottom:12px;">Adicione a sessão na sua agenda para não esquecer:</p>
+        <a id="cal-link" href="#" target="_blank" style="display:inline-block;background:#2563eb;color:#fff;font-weight:700;font-size:14px;padding:12px 24px;border-radius:10px;text-decoration:none;">📅 Adicionar ao Google Agenda</a>
+      </div>
+      <p style="font-size:13px;color:#999;margin-top:16px;">Você também receberá uma confirmação por WhatsApp em breve.</p>
+    </div>
+
+  </form>
+</div>
+
+<script>
+  // Mostra/oculta campos de data conforme opção escolhida
+  document.querySelectorAll('input[name="agendamento_tipo"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      document.getElementById('campo_data_hora').style.display = this.value === 'confirmado' ? 'block' : 'none';
+      document.getElementById('campo_sugestao').style.display = this.value === 'sugerir' ? 'block' : 'none';
+    });
+  });
+
+  // Define data mínima como hoje
+  document.getElementById('data_sessao').min = new Date().toISOString().split('T')[0];
+
+  document.getElementById('diagForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('button[type="submit"]');
+    btn.textContent = 'Enviando...';
+    btn.disabled = true;
+
+    // Gera link do Google Calendar se data/hora foram preenchidas
+    const tipo = document.querySelector('input[name="agendamento_tipo"]:checked');
+    const calWrap = document.getElementById('cal-wrap');
+    const calLink = document.getElementById('cal-link');
+
+    if (tipo && tipo.value === 'confirmado') {
+      const data = document.getElementById('data_sessao').value;
+      const hora = document.getElementById('hora_sessao').value;
+      if (data && hora) {
+        const start = data.replace(/-/g,'') + 'T' + hora.replace(':','') + '00';
+        const endHour = String(parseInt(hora.split(':')[0]) + 1).padStart(2,'0');
+        const end = data.replace(/-/g,'') + 'T' + endHour + hora.split(':')[1] + '00';
+        const title = encodeURIComponent('Sessão de Mentoria — Yuri Chaves');
+        const details = encodeURIComponent('Mentoria de Carreira com Yuri Chaves. Acesse: meet.google.com');
+        calLink.href = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${details}`;
+        calWrap.style.display = 'block';
+      }
+    }
+
+    // Envia para Formspree
+    const formData = new FormData(this);
+    fetch('https://formspree.io/f/xaqkppyk', {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(res => {
+      if (res.ok) {
+        document.querySelectorAll('.step, .submit-wrap').forEach(el => el.style.display = 'none');
+        document.getElementById('successMsg').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        return res.json().then(data => { throw new Error(data.error || 'Erro ao enviar'); });
+      }
+    })
+    .catch(() => {
+      btn.textContent = 'Erro ao enviar — tente novamente';
+      btn.disabled = false;
+      btn.style.background = '#ef4444';
+      setTimeout(() => {
+        btn.textContent = 'Enviar diagnóstico ✓';
+        btn.style.background = '';
+      }, 4000);
+    });
+  });
+
+  // Destaca a opção selecionada nas escalas
+  document.querySelectorAll('.scale-group label').forEach(label => {
+    label.addEventListener('click', function() {
+      const group = this.closest('.scale-group');
+      group.querySelectorAll('label').forEach(l => l.style.borderColor = '');
+    });
+  });
+</script>
+
+</body>
+</html>
