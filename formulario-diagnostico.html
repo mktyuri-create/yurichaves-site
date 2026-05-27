@@ -253,7 +253,7 @@
 </div>
 
 <div class="form-wrap">
-  <form id="diagForm">
+  <form id="diagForm" action="https://formspree.io/f/xjgzjpwj" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="_subject" value="Diagnóstico — Novo mentorado">
     <input type="hidden" name="origem_formulario" value="diagnostico">
 
@@ -515,7 +515,7 @@
 
     // Envia para Formspree
     const formData = new FormData(this);
-    fetch('https://formspree.io/f/xaqkppyk', {
+    fetch('https://formspree.io/f/xjgzjpwj', {
       method: 'POST',
       body: formData,
       headers: { 'Accept': 'application/json' }
