@@ -341,9 +341,9 @@
         <div class="q-text">Como você se chama e como falo com você?</div>
         <div class="q-hint">Nome completo e WhatsApp para eu confirmar a sessão.</div>
         <div style="display:flex;flex-direction:column;gap:12px;">
-          <input type="text" id="nome" placeholder="Seu nome completo" required />
-          <input type="tel" id="whatsapp" placeholder="WhatsApp com DDD — (00) 00000-0000" />
-          <input type="email" id="email" placeholder="Seu melhor e-mail" required />
+          <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required />
+          <input type="tel" id="whatsapp" name="whatsapp" placeholder="WhatsApp com DDD — (00) 00000-0000" />
+          <input type="email" id="email" name="email" placeholder="Seu melhor e-mail" required />
         </div>
       </div>
 
@@ -366,7 +366,7 @@
         <div class="q-number">Pergunta 3 de 5</div>
         <div class="q-text">Qual é o maior desafio da sua carreira hoje?</div>
         <div class="q-hint">Fala do jeito que você falaria pra um amigo — sem formalidade.</div>
-        <textarea id="dor" placeholder="Ex: Estou há 3 anos no mesmo cargo sem perspectiva de crescimento e não sei por onde começar a mudar isso..." required></textarea>
+        <textarea id="dor" name="dor" placeholder="Ex: Estou há 3 anos no mesmo cargo sem perspectiva de crescimento e não sei por onde começar a mudar isso..." required></textarea>
       </div>
 
       <!-- Q4: Expectativa -->
