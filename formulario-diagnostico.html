@@ -253,7 +253,7 @@
 </div>
 
 <div class="form-wrap">
-  <form id="diagForm" action="https://formspree.io/f/xjgzjpwj" method="POST" enctype="multipart/form-data">
+  <form id="diagForm" action="https://formspree.io/f/xjgzjpwj" method="POST">
     <input type="hidden" name="_subject" value="Diagnóstico — Novo mentorado">
     <input type="hidden" name="origem_formulario" value="diagnostico">
 
@@ -441,12 +441,6 @@
       </div>
 
       <div class="field">
-        <label for="curriculo">Currículo <span class="hint">(PDF — ajuda muito se você está em busca ativa ou quer mudar de área)</span></label>
-        <input type="file" id="curriculo" name="curriculo" accept=".pdf,.doc,.docx" style="padding: 10px 14px; cursor: pointer;" />
-        <p style="font-size: 12px; color: #999; margin-top: 6px;">Formatos aceitos: PDF, DOC, DOCX. Tamanho máximo: 5MB.</p>
-      </div>
-
-      <div class="field">
         <label for="como_chegou">Como você chegou até a mentoria do Yuri Chaves?</label>
         <input type="text" id="como_chegou" name="como_chegou" placeholder="Instagram, LinkedIn, indicação, Google..." />
       </div>
@@ -460,6 +454,7 @@
     <div class="submit-wrap">
       <p>Ao enviar, suas respostas chegam diretamente para o Yuri antes da nossa primeira sessão.<br/>Nenhuma informação é compartilhada com terceiros.</p>
       <button type="submit">Enviar diagnóstico ✓</button>
+      <p id="formError" style="color:#ef4444;font-size:13px;margin-top:12px;min-height:18px;"></p>
     </div>
 
     <div class="success" id="successMsg">
@@ -520,23 +515,29 @@
       body: formData,
       headers: { 'Accept': 'application/json' }
     })
-    .then(res => {
+    .then(async res => {
+      let data = {};
+      try { data = await res.json(); } catch(e) {}
       if (res.ok) {
         document.querySelectorAll('.step, .submit-wrap').forEach(el => el.style.display = 'none');
         document.getElementById('successMsg').style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
-        return res.json().then(data => { throw new Error(data.error || 'Erro ao enviar'); });
+        const msg = (data.errors && data.errors.map(e => e.message).join(' · ')) || data.error || ('HTTP ' + res.status);
+        throw new Error(msg);
       }
     })
-    .catch(() => {
+    .catch(err => {
+      console.error('Formspree error:', err);
+      const errEl = document.getElementById('formError');
+      if (errEl) errEl.textContent = 'Detalhe: ' + err.message;
       btn.textContent = 'Erro ao enviar — tente novamente';
       btn.disabled = false;
       btn.style.background = '#ef4444';
       setTimeout(() => {
         btn.textContent = 'Enviar diagnóstico ✓';
         btn.style.background = '';
-      }, 4000);
+      }, 6000);
     });
   });
 
