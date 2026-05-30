@@ -5,650 +5,221 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Mentoria de Carreira com Yuri Chaves — clareza, direção e estratégia para transformar sua carreira em 3 meses."/>
   <title>Mentoria de Carreira — Yuri Chaves</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..700&family=Hanken+Grotesk:wght@300..800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --blue: #2563eb;
-      --blue-dark: #1d4ed8;
-      --blue-light: #eff6ff;
-      --black: #0a0a0a;
-      --gray-dark: #1a1a1a;
-      --gray: #555;
-      --gray-light: #f7f7f5;
-      --border: #e8e8e8;
-      --white: #ffffff;
+    :root{
+      --ink:#0A0C0F;--ink-2:#0F1318;--surface:#14191F;--surface-2:#1B2128;
+      --line:rgba(232,185,100,.14);--line-soft:rgba(244,239,232,.08);
+      --paper:#F4EFE8;--paper-dim:#B8B2A8;--muted:#8A8E94;
+      --gold:#E8B964;--gold-deep:#C99440;--gold-glow:rgba(232,185,100,.22);
+      --maxw:1180px;
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      color: var(--gray-dark);
-      background: var(--white);
-      line-height: 1.6;
-    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:var(--ink);color:var(--paper);font-family:'Hanken Grotesk',sans-serif;font-weight:380;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+      background:radial-gradient(900px 600px at 78% -8%, var(--gold-glow), transparent 60%),radial-gradient(700px 500px at -5% 18%, rgba(80,110,140,.10), transparent 60%)}
+    body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;position:relative;z-index:2}
+    section{position:relative;z-index:2}
+    h1,h2,h3,.display{font-family:'Fraunces',serif;font-weight:560;line-height:1.04;letter-spacing:-.015em}
+    .eyebrow{font-family:'Geist Mono',monospace;font-size:.72rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
 
     /* NAV */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      background: rgba(10,10,10,.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid #1a1a1a;
-      padding: 0 24px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+    header.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 28px;transition:.4s ease;border-bottom:1px solid transparent}
+    header.nav.stuck{background:rgba(10,12,15,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:12px 28px}
+    .logo{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;letter-spacing:-.01em;color:var(--paper);text-decoration:none}
+    .logo span{color:var(--gold)}
+    .nav-cta{font-family:'Hanken Grotesk';font-weight:600;font-size:.85rem;color:var(--ink);background:var(--gold);border:none;border-radius:100px;padding:11px 22px;cursor:pointer;text-decoration:none;opacity:0;transform:translateY(-6px);transition:.4s ease, filter .2s;pointer-events:none;white-space:nowrap}
+    header.nav.stuck .nav-cta{opacity:1;transform:none;pointer-events:auto}
+    .nav-cta:hover{filter:brightness(1.08)}
 
-    .nav-brand {
-      font-size: 16px;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -.2px;
-    }
-
-    .nav-brand span { color: var(--blue); }
-
-    .nav-cta {
-      background: var(--blue);
-      color: #fff;
-      font-size: 13px;
-      font-weight: 700;
-      padding: 8px 18px;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background .2s;
-    }
-
-    .nav-cta:hover { background: var(--blue-dark); }
+    /* BUTTONS */
+    .btn{display:inline-flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none;font-family:'Hanken Grotesk';font-weight:650;font-size:1.02rem;letter-spacing:.01em;color:var(--ink);background:var(--gold);padding:18px 34px;border:none;border-radius:100px;box-shadow:0 0 0 1px var(--gold-deep), 0 20px 50px -18px var(--gold-glow);transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s, filter .2s}
+    .btn:hover{transform:translateY(-3px);filter:brightness(1.06);box-shadow:0 0 0 1px var(--gold-deep), 0 28px 60px -16px var(--gold-glow)}
+    .btn .arr{transition:transform .25s}
+    .btn:hover .arr{transform:translateX(5px)}
 
     /* HERO */
-    .hero {
-      background: var(--black);
-      padding: 130px 24px 90px;
-      text-align: center;
-    }
+    .hero{min-height:96vh;display:flex;align-items:center;padding:150px 0 80px;overflow:hidden;text-align:center}
+    .hero .wrap{max-width:900px}
+    .hero h1{font-size:clamp(2.4rem,5.8vw,4.6rem);margin:24px 0 22px}
+    .hero h1 em{font-style:italic;color:var(--gold);font-weight:400}
+    .hero .sub{font-size:1.14rem;color:var(--paper-dim);max-width:58ch;margin:0 auto 36px;line-height:1.7}
+    .hero-cta-wrap{display:flex;flex-direction:column;align-items:center;gap:18px}
+    .hero-note{font-size:.85rem;color:var(--muted);display:flex;align-items:center;gap:10px}
+    .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);animation:pulse 2.2s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #111;
-      border: 1px solid #2a2a2a;
-      color: #aaa;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      padding: 6px 16px;
-      border-radius: 20px;
-      margin-bottom: 28px;
-    }
-
-    .hero-badge span { color: var(--blue); }
-
-    .hero h1 {
-      font-size: clamp(28px, 6vw, 52px);
-      font-weight: 900;
-      color: #fff;
-      line-height: 1.1;
-      letter-spacing: -.5px;
-      max-width: 800px;
-      margin: 0 auto 20px;
-    }
-
-    .hero h1 em {
-      font-style: normal;
-      color: var(--blue);
-    }
-
-    .hero-sub {
-      font-size: clamp(15px, 2.5vw, 18px);
-      color: #888;
-      max-width: 560px;
-      margin: 0 auto 36px;
-      line-height: 1.7;
-    }
-
-    .hero-cta-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .btn-primary {
-      display: inline-block;
-      background: var(--blue);
-      color: #fff;
-      font-size: 16px;
-      font-weight: 700;
-      padding: 17px 36px;
-      border-radius: 12px;
-      text-decoration: none;
-      transition: all .2s;
-      letter-spacing: -.1px;
-    }
-
-    .btn-primary:hover {
-      background: var(--blue-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(37,99,235,.35);
-    }
-
-    .hero-note {
-      font-size: 13px;
-      color: #666;
-    }
-
-    /* SOCIAL PROOF STRIP */
-    .proof-strip {
-      background: #111;
-      border-top: 1px solid #1e1e1e;
-      border-bottom: 1px solid #1e1e1e;
-      padding: 18px 24px;
-      text-align: center;
-    }
-
-    .proof-strip p {
-      font-size: 13px;
-      color: #777;
-      letter-spacing: .03em;
-    }
-
-    .proof-strip strong { color: #ccc; }
+    /* PROOF STRIP */
+    .proof-strip{padding:22px 0;border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);background:var(--ink-2);text-align:center}
+    .proof-strip p{font-size:.92rem;color:var(--paper-dim);font-family:'Geist Mono';letter-spacing:.05em}
+    .proof-strip b{color:var(--gold);font-weight:500}
 
     /* SECTION BASE */
-    section {
-      padding: 80px 24px;
-    }
-
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-    }
-
-    .section-tag {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      font-size: clamp(22px, 4vw, 36px);
-      font-weight: 800;
-      line-height: 1.2;
-      letter-spacing: -.3px;
-      margin-bottom: 16px;
-      color: var(--black);
-    }
-
-    .section-sub {
-      font-size: 16px;
-      color: var(--gray);
-      line-height: 1.7;
-      max-width: 580px;
-    }
+    section.std{padding:100px 0;border-top:1px solid var(--line-soft)}
+    .shead{display:flex;flex-direction:column;gap:14px;margin-bottom:40px;max-width:760px}
+    .section-tag{font-family:'Geist Mono';font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+    .section-title{font-family:'Fraunces';font-weight:560;font-size:clamp(1.9rem,3.6vw,3.1rem);line-height:1.08;letter-spacing:-.015em;color:var(--paper)}
+    .section-title em{font-style:italic;color:var(--gold);font-weight:400}
+    .section-sub{font-size:1.04rem;color:var(--paper-dim);max-width:64ch;line-height:1.7}
 
     /* PARA QUEM É */
-    .para-quem { background: var(--gray-light); }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-      margin-top: 40px;
-    }
-
-    .card-item {
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 24px;
-    }
-
-    .card-item .icon {
-      font-size: 28px;
-      margin-bottom: 12px;
-    }
-
-    .card-item h3 {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: var(--black);
-    }
-
-    .card-item p {
-      font-size: 14px;
-      color: var(--gray);
-      line-height: 1.6;
-    }
+    .para-quem{background:var(--ink-2)}
+    .cards-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:10px}
+    .card-item{border-radius:16px;padding:28px;background:linear-gradient(165deg,var(--surface),var(--ink-2));border:1px solid var(--line-soft);transition:.3s}
+    .card-item:hover{border-color:var(--line);transform:translateY(-4px)}
+    .card-item .icon{font-size:1.8rem;display:block;margin-bottom:12px;filter:grayscale(.2)}
+    .card-item h3{font-family:'Fraunces';font-weight:560;font-size:1.3rem;margin-bottom:8px;color:var(--paper)}
+    .card-item p{color:var(--paper-dim);font-size:.98rem;line-height:1.6}
 
     /* SOBRE */
-    .sobre-wrap {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-      margin-top: 20px;
-    }
-
-    .sobre-foto {
-      border-radius: 20px;
-      aspect-ratio: 3/4;
-      overflow: hidden;
-    }
-
-    .sobre-foto img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
-    }
-
-    .sobre-texto p {
-      font-size: 15px;
-      color: var(--gray);
-      line-height: 1.8;
-      margin-bottom: 16px;
-    }
-
-    .sobre-texto p:last-child { margin-bottom: 0; }
-
-    .sobre-texto strong { color: var(--black); font-weight: 700; }
-
-    .sobre-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 28px;
-    }
-
-    .stat {
-      background: var(--gray-light);
-      border-radius: 12px;
-      padding: 16px;
-    }
-
-    .stat .num {
-      font-size: 26px;
-      font-weight: 900;
-      color: var(--blue);
-      letter-spacing: -.5px;
-    }
-
-    .stat .label {
-      font-size: 13px;
-      color: var(--gray);
-      margin-top: 2px;
-    }
+    .sobre-wrap{display:grid;grid-template-columns:.82fr 1.18fr;gap:54px;align-items:center}
+    .sobre-foto{aspect-ratio:4/5;border-radius:20px;border:1px solid var(--line);position:relative;overflow:hidden;background:radial-gradient(120% 120% at 30% 10%, rgba(232,185,100,.18), transparent 55%),linear-gradient(160deg,var(--surface-2),var(--ink));display:grid;place-items:center}
+    .sobre-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+    .sobre-foto .mono{font-family:'Fraunces';font-size:8rem;font-weight:300;color:var(--gold);opacity:.85}
+    .sobre-texto h2{font-family:'Fraunces';font-weight:560;font-size:clamp(1.9rem,3.6vw,3rem);margin-bottom:22px}
+    .sobre-texto p{font-size:1.06rem;color:var(--paper-dim);line-height:1.8;margin-bottom:18px}
+    .sobre-texto p:last-of-type{margin-bottom:0}
+    .sobre-texto strong{color:var(--paper);font-weight:600}
+    .sobre-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:32px}
+    .stat{border-radius:14px;padding:18px;border:1px solid var(--line-soft);background:rgba(244,239,232,.02)}
+    .stat .num{font-family:'Fraunces';font-size:1.6rem;font-weight:600;color:var(--gold);letter-spacing:-.5px;line-height:1.1}
+    .stat .label{font-size:.84rem;color:var(--paper-dim);margin-top:4px;line-height:1.5}
 
     /* COMO FUNCIONA */
-    .como-funciona { background: var(--black); }
-    .como-funciona .section-title { color: #fff; }
-    .como-funciona .section-sub { color: #888; }
-    .como-funciona .section-tag { color: #60a5fa; }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2px;
-      margin-top: 48px;
-      position: relative;
-    }
-
-    .step-item {
-      background: #111;
-      border: 1px solid #1e1e1e;
-      border-radius: 16px;
-      padding: 28px 24px;
-      position: relative;
-    }
-
-    .step-num {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: .1em;
-      color: var(--blue);
-      margin-bottom: 12px;
-    }
-
-    .step-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 8px;
-    }
-
-    .step-desc {
-      font-size: 13px;
-      color: #777;
-      line-height: 1.6;
-    }
-
-    .step-tag {
-      display: inline-block;
-      margin-top: 12px;
-      font-size: 11px;
-      font-weight: 600;
-      color: #60a5fa;
-      background: rgba(37,99,235,.15);
-      padding: 3px 10px;
-      border-radius: 10px;
-    }
+    .como-funciona{background:linear-gradient(180deg,transparent,rgba(232,185,100,.03),transparent)}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:14px}
+    .step-item{border-radius:18px;padding:30px;background:linear-gradient(165deg,var(--surface),var(--ink-2));border:1px solid var(--line-soft);transition:.3s}
+    .step-item:hover{border-color:var(--line);transform:translateY(-4px)}
+    .step-num{font-family:'Geist Mono';font-size:.66rem;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
+    .step-title{font-family:'Fraunces';font-weight:560;font-size:1.45rem;color:var(--paper);margin-bottom:10px}
+    .step-desc{color:var(--paper-dim);font-size:.96rem;line-height:1.6}
+    .step-tag{display:inline-block;margin-top:16px;font-family:'Geist Mono';font-size:.7rem;color:var(--muted);border:1px solid var(--line-soft);border-radius:100px;padding:5px 12px}
+    .incl-strip{margin-top:28px;padding:22px 26px;border-radius:16px;border:1px solid var(--line);background:rgba(232,185,100,.04)}
+    .incl-strip p{color:var(--paper-dim);font-size:.96rem;line-height:1.7}
+    .incl-strip .c{color:var(--gold)}
 
     /* TEMAS */
-    .temas { background: var(--gray-light); }
-
-    .temas-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 14px;
-      margin-top: 40px;
-    }
-
-    .tema-card {
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 22px;
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-    }
-
-    .tema-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--blue-light);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    .tema-card h4 {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--black);
-      margin-bottom: 4px;
-    }
-
-    .tema-card p {
-      font-size: 13px;
-      color: var(--gray);
-      line-height: 1.5;
-    }
-
-    .tema-obs {
-      margin-top: 24px;
-      background: var(--blue-light);
-      border-left: 3px solid var(--blue);
-      border-radius: 0 10px 10px 0;
-      padding: 14px 18px;
-      font-size: 14px;
-      color: #1e40af;
-      line-height: 1.6;
-    }
+    .temas{background:var(--ink-2)}
+    .temas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:14px}
+    .tema-card{border-radius:16px;padding:26px;background:rgba(244,239,232,.02);border:1px solid var(--line-soft);display:flex;gap:14px;align-items:flex-start;transition:.3s}
+    .tema-card:hover{border-color:var(--line);transform:translateY(-3px)}
+    .tema-icon{width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:rgba(232,185,100,.06);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+    .tema-card h4{font-family:'Fraunces';font-weight:560;font-size:1.15rem;color:var(--paper);margin-bottom:6px}
+    .tema-card p{font-size:.92rem;color:var(--paper-dim);line-height:1.55}
+    .tema-obs{margin-top:28px;padding:20px 24px;border-radius:14px;border-left:2px solid var(--gold);background:rgba(232,185,100,.04);color:var(--paper-dim);font-size:.98rem;line-height:1.7}
+    .tema-obs strong{color:var(--gold);font-weight:600}
 
     /* DEPOIMENTOS */
-    .depoimentos-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
-      margin-top: 40px;
-    }
-
-    .dep-card {
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: 16px;
-      padding: 28px;
-    }
-
-    .dep-stars {
-      color: #f59e0b;
-      font-size: 16px;
-      margin-bottom: 14px;
-    }
-
-    .dep-text {
-      font-size: 15px;
-      color: #333;
-      line-height: 1.7;
-      font-style: italic;
-      margin-bottom: 20px;
-    }
-
-    .dep-author {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .dep-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: #e8e8e8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    .dep-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-
-    .dep-avatar.placeholder {
-      background: var(--blue-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--blue);
-      flex-shrink: 0;
-    }
-
-    .dep-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--black);
-    }
-
-    .dep-role {
-      font-size: 12px;
-      color: var(--gray);
-    }
+    .depoimentos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:14px}
+    .dep-card{border-radius:18px;padding:30px;background:linear-gradient(165deg,var(--surface),var(--ink-2));border:1px solid var(--line-soft);display:flex;flex-direction:column;transition:.35s}
+    .dep-card:hover{border-color:var(--line);transform:translateY(-4px)}
+    .dep-stars{color:var(--gold);letter-spacing:3px;font-size:.9rem;margin-bottom:14px}
+    .dep-text{font-family:'Fraunces';font-style:italic;font-weight:400;font-size:1.04rem;color:var(--paper);line-height:1.55;margin-bottom:22px;flex:1}
+    .dep-author{display:flex;align-items:center;gap:14px;border-top:1px solid var(--line-soft);padding-top:18px}
+    .dep-avatar{width:46px;height:46px;border-radius:50%;flex:none;display:grid;place-items:center;font-family:'Fraunces';font-weight:600;font-size:1.2rem;color:var(--ink);background:linear-gradient(145deg,var(--gold),var(--gold-deep))}
+    .dep-name{font-weight:650;font-size:.98rem;color:var(--paper)}
+    .dep-name a{color:inherit;text-decoration:none}
+    .dep-name a:hover{color:var(--gold)}
+    .dep-role{font-family:'Geist Mono';font-size:.74rem;color:var(--muted);margin-top:2px}
 
     /* FAQ */
-    .faq { background: var(--gray-light); }
-
-    .faq-list {
-      max-width: 680px;
-      margin: 40px auto 0;
-    }
-
-    .faq-item {
-      border-bottom: 1.5px solid var(--border);
-    }
-
-    .faq-q {
-      width: 100%;
-      background: none;
-      border: none;
-      text-align: left;
-      padding: 20px 0;
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--black);
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      font-family: inherit;
-    }
-
-    .faq-q .arrow {
-      font-size: 18px;
-      color: var(--blue);
-      transition: transform .25s;
-      flex-shrink: 0;
-    }
-
-    .faq-item.open .faq-q .arrow { transform: rotate(45deg); }
-
-    .faq-a {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height .3s ease, padding .3s;
-      font-size: 14px;
-      color: var(--gray);
-      line-height: 1.7;
-    }
-
-    .faq-item.open .faq-a {
-      max-height: 300px;
-      padding-bottom: 18px;
-    }
+    .faq{background:var(--ink-2)}
+    .faq-list{max-width:820px;margin:0 auto}
+    .faq-item{border-bottom:1px solid var(--line-soft)}
+    .faq-q{width:100%;text-align:left;background:none;border:none;cursor:pointer;color:var(--paper);font-family:'Fraunces';font-size:1.18rem;font-weight:500;padding:24px 50px 24px 0;position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:color .2s}
+    .faq-q:hover{color:var(--gold)}
+    .faq-q .arrow{font-size:1.4rem;color:var(--gold);transition:transform .35s;flex-shrink:0;font-weight:300}
+    .faq-item.open .faq-q .arrow{transform:rotate(45deg)}
+    .faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease}
+    .faq-a-inner{color:var(--paper-dim);font-size:1.02rem;line-height:1.7;padding:0 50px 26px 0}
 
     /* CTA FINAL */
-    .cta-final {
-      background: var(--black);
-      text-align: center;
-    }
-
-    .cta-final h2 {
-      font-size: clamp(24px, 5vw, 42px);
-      font-weight: 900;
-      color: #fff;
-      line-height: 1.15;
-      letter-spacing: -.3px;
-      margin-bottom: 16px;
-      max-width: 680px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .cta-final h2 em {
-      font-style: normal;
-      color: var(--blue);
-    }
-
-    .cta-final p {
-      font-size: 16px;
-      color: #888;
-      margin-bottom: 36px;
-      line-height: 1.7;
-    }
-
-    .cta-chips {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 24px;
-    }
-
-    .chip {
-      background: #111;
-      border: 1px solid #2a2a2a;
-      color: #aaa;
-      font-size: 13px;
-      padding: 6px 14px;
-      border-radius: 20px;
-    }
+    .cta-final{padding:110px 0 120px;border-top:1px solid var(--line-soft);text-align:center;background:radial-gradient(800px 460px at 50% 30%, rgba(232,185,100,.10), transparent 60%)}
+    .cta-final h2{font-family:'Fraunces';font-weight:560;font-size:clamp(2.2rem,5vw,3.8rem);max-width:20ch;margin:14px auto 18px;line-height:1.05;letter-spacing:-.015em}
+    .cta-final h2 em{font-style:italic;color:var(--gold);font-weight:400}
+    .cta-final .lead{color:var(--paper-dim);font-size:1.15rem;max-width:54ch;margin:0 auto 32px;line-height:1.7}
+    .cta-chips{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:30px}
+    .chip{font-family:'Geist Mono';font-size:.78rem;letter-spacing:.04em;color:var(--paper-dim);border:1px solid var(--line);border-radius:100px;padding:8px 16px}
+    .chip .c{color:var(--gold)}
 
     /* FOOTER */
-    footer {
-      background: #060606;
-      border-top: 1px solid #111;
-      padding: 28px 24px;
-      text-align: center;
-    }
+    footer{padding:40px 0;text-align:center;color:var(--muted);font-size:.84rem;border-top:1px solid var(--line-soft);position:relative;z-index:2}
+    footer a{color:var(--paper-dim);text-decoration:none}
+    footer a:hover{color:var(--gold)}
 
-    footer p {
-      font-size: 13px;
-      color: #555;
-    }
-
-    footer a { color: #888; text-decoration: none; }
-    footer a:hover { color: #aaa; }
+    /* REVEAL */
+    [data-rv]{opacity:0;transform:translateY(26px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1)}
+    [data-rv].in{opacity:1;transform:none}
 
     /* RESPONSIVE */
-    @media (max-width: 700px) {
-      .sobre-wrap { grid-template-columns: 1fr; }
-      .sobre-foto { aspect-ratio: 1/1; }
-      .steps { grid-template-columns: 1fr; gap: 10px; }
-      section { padding: 60px 20px; }
+    @media (max-width: 900px){
+      .cards-grid,.steps,.temas-grid,.depoimentos-grid,.sobre-wrap{grid-template-columns:1fr}
+      .sobre-foto{max-width:340px;margin:0 auto;aspect-ratio:3/4}
+      section.std{padding:80px 0}
+      .nav-cta{display:none}header.nav.stuck .nav-cta{display:inline-flex}
+    }
+    @media (max-width: 560px){
+      .wrap{padding:0 20px}
+      .sobre-stats{grid-template-columns:1fr}
+      .faq-q{font-size:1.06rem}
     }
   </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav>
-  <div class="nav-brand">Yuri<span>Chaves</span></div>
+<header class="nav" id="nav">
+  <a class="logo" href="#">Yuri Chaves<span>.</span></a>
   <a href="#agendar" class="nav-cta">Sessão gratuita →</a>
-</nav>
+</header>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">✦ <span>Mentoria Individual de Carreira</span> · 3 meses</div>
-  <h1>Pare de improvisar.<br/>Construa uma <em>carreira com estratégia.</em></h1>
-  <p class="hero-sub">Em 3 meses, você sai da paralisia e vai para a ação — com clareza sobre quem você é, para onde vai, com um plano de imagem pessoal, network premium e como usar as ferramentas certas para chegar lá.</p>
-  <div class="hero-cta-wrap">
-    <a href="#agendar" class="btn-primary">Quero minha sessão gratuita →</a>
-    <p class="hero-note">30 minutos · sem compromisso · 100% online</p>
+  <div class="wrap">
+    <div class="eyebrow" data-rv>✦ Mentoria Individual de Carreira · 3 meses</div>
+    <h1 data-rv>Pare de improvisar.<br/>Construa uma <em>carreira com estratégia.</em></h1>
+    <p class="sub" data-rv>Em 3 meses, você sai da paralisia e vai para a ação — com clareza sobre quem você é, para onde vai, com um plano de imagem pessoal, network premium e como usar as ferramentas certas para chegar lá.</p>
+    <div class="hero-cta-wrap" data-rv>
+      <a href="#agendar" class="btn">Quero minha sessão gratuita <span class="arr">→</span></a>
+      <p class="hero-note"><span class="dot"></span> 30 minutos · sem compromisso · 100% online</p>
+    </div>
   </div>
 </section>
 
 <!-- PROOF STRIP -->
 <div class="proof-strip">
-  <p>Profissionais de <strong>vendas, marketing, tecnologia, educação, saúde e negócios</strong> já passaram por esse processo</p>
+  <div class="wrap"><p>Profissionais de <b>vendas, marketing, tecnologia, educação, saúde e negócios</b> já passaram por esse processo</p></div>
 </div>
 
 <!-- PARA QUEM É -->
-<section class="para-quem">
-  <div class="container">
-    <span class="section-tag">Para quem é</span>
-    <h2 class="section-title">Você se identifica com algum desses cenários?</h2>
+<section class="std para-quem">
+  <div class="wrap">
+    <div class="shead">
+      <span class="section-tag" data-rv>01 / Para quem é</span>
+      <h2 class="section-title" data-rv>Você se identifica com algum desses <em>cenários?</em></h2>
+    </div>
     <div class="cards-grid">
-      <div class="card-item">
+      <div class="card-item" data-rv>
         <div class="icon">😔</div>
         <h3>Estagnado(a) sem saber por quê</h3>
         <p>Você trabalha muito, entrega resultado, mas não cresce. Parece que algo trava — e você não sabe exatamente o quê.</p>
       </div>
-      <div class="card-item">
+      <div class="card-item" data-rv>
         <div class="icon">🔀</div>
         <h3>Querendo mudar de área</h3>
         <p>Tem vontade de ir para outro caminho, mas não sabe se é o momento certo, se vai dar certo ou como fazer a transição sem riscos.</p>
       </div>
-      <div class="card-item">
+      <div class="card-item" data-rv>
         <div class="icon">🌫️</div>
         <h3>Sem clareza de direção</h3>
         <p>Tem várias ideias sobre o que quer, mas nenhuma com convicção. Cada semana uma prioridade diferente e zero avanço real.</p>
       </div>
-      <div class="card-item">
+      <div class="card-item" data-rv>
         <div class="icon">📉</div>
         <h3>Com medo de ficar para trás</h3>
         <p>O mercado está mudando rápido — IA, novas habilidades, novas expectativas. Você sente que precisa se atualizar, mas não sabe por onde.</p>
@@ -658,39 +229,25 @@
 </section>
 
 <!-- SOBRE -->
-<section>
-  <div class="container">
+<section class="std">
+  <div class="wrap">
     <div class="sobre-wrap">
-      <div class="sobre-foto">
-        <img src="foto-yuri.jpg" alt="Yuri Chaves — Mentor de Carreira"/>
+      <div class="sobre-foto" data-rv>
+        <div class="mono">Y</div>
+        <img src="foto-yuri.jpg" alt="Yuri Chaves — Mentor de Carreira" onerror="this.style.display='none'"/>
       </div>
-      <div class="sobre-texto">
-        <span class="section-tag">Quem vai te acompanhar</span>
-        <h2 class="section-title" style="margin-bottom:20px;">Oi, eu sou o Yuri Chaves</h2>
-        <p>Passei por três grandes multinacionais — <strong>P&G, Duracell e General Mills</strong> — fui promovido 5 vezes e cheguei a morar em mais de 5 estados entre o nordeste e o sudeste do Brasil.</p>
+      <div class="sobre-texto" data-rv>
+        <span class="section-tag" style="display:block;margin-bottom:14px;">02 / Quem vai te acompanhar</span>
+        <h2>Oi, eu sou o Yuri Chaves</h2>
+        <p>Passei por três grandes multinacionais — <strong>P&amp;G, Duracell e General Mills</strong> — fui promovido 5 vezes e cheguei a morar em mais de 5 estados entre o nordeste e o sudeste do Brasil.</p>
         <p>Iniciei minha carreira como promotor e logo fui promovido a supervisor. Desde então, <strong>lidero pessoas há mais de 13 anos</strong> — de promotores a gerentes de vendas — chegando à posição de <strong>Gerente Regional Sênior</strong>. Minha comunicação é simples, direta e com passos claros.</p>
         <p>Já acompanhei profissionais em transição de carreira, buscando crescimento, querendo reencontrar o propósito e em busca de recolocação. Em todos os casos, a virada aconteceu quando paramos de correr e começamos a pensar com estratégia. Por isso, desenvolvi o método <strong>CIVA — Crença, Imagem, Visibilidade e Ação</strong>. Aplicado no mundo corporativo, ele é o caminho mais direto para quem quer se destacar de verdade.</p>
         <div class="sobre-stats">
-          <div class="stat">
-            <div class="num">3 meses</div>
-            <div class="label">de acompanhamento próximo</div>
-          </div>
-          <div class="stat">
-            <div class="num">6 sessões</div>
-            <div class="label">personalizadas 1:1</div>
-          </div>
-          <div class="stat">
-            <div class="num">5×</div>
-            <div class="label">promovido em grandes multinacionais</div>
-          </div>
-          <div class="stat">
-            <div class="num">13+ anos</div>
-            <div class="label">liderando pessoas no corporativo</div>
-          </div>
-          <div class="stat" style="grid-column:1/-1;">
-            <div class="num" style="font-size:18px;">🤝 Network</div>
-            <div class="label">com líderes de grandes multinacionais</div>
-          </div>
+          <div class="stat"><div class="num">3 meses</div><div class="label">de acompanhamento próximo</div></div>
+          <div class="stat"><div class="num">6 sessões</div><div class="label">personalizadas 1:1</div></div>
+          <div class="stat"><div class="num">5×</div><div class="label">promovido em grandes multinacionais</div></div>
+          <div class="stat"><div class="num">13+ anos</div><div class="label">liderando pessoas no corporativo</div></div>
+          <div class="stat" style="grid-column:1/-1;"><div class="num" style="font-size:1.1rem;">Network premium</div><div class="label">com líderes de grandes multinacionais</div></div>
         </div>
       </div>
     </div>
@@ -698,83 +255,84 @@
 </section>
 
 <!-- COMO FUNCIONA -->
-<section class="como-funciona">
-  <div class="container">
-    <span class="section-tag">Como funciona</span>
-    <h2 class="section-title">Um processo claro, do começo ao fim</h2>
-    <p class="section-sub">Sem receita pronta. Cada mentoria é montada a partir do seu diagnóstico — os temas, o ritmo e os objetivos são definidos juntos na primeira sessão.</p>
+<section class="std como-funciona">
+  <div class="wrap">
+    <div class="shead">
+      <span class="section-tag" data-rv>03 / Como funciona</span>
+      <h2 class="section-title" data-rv>Um processo claro, do <em>começo ao fim.</em></h2>
+      <p class="section-sub" data-rv>Sem receita pronta. Cada mentoria é montada a partir do seu diagnóstico — os temas, o ritmo e os objetivos são definidos juntos na primeira sessão.</p>
+    </div>
     <div class="steps">
-      <div class="step-item">
-        <div class="step-num">SESSÃO 01</div>
+      <div class="step-item" data-rv>
+        <div class="step-num">Sessão 01</div>
         <div class="step-title">Diagnóstico</div>
         <div class="step-desc">Mapeamos onde você está, o que está travando e definimos os objetivos e o plano das próximas sessões.</div>
         <span class="step-tag">Semana 1</span>
       </div>
-      <div class="step-item">
-        <div class="step-num">SESSÕES 02–05</div>
+      <div class="step-item" data-rv>
+        <div class="step-num">Sessões 02–05</div>
         <div class="step-title">Desenvolvimento</div>
         <div class="step-desc">Trabalhamos os temas definidos no diagnóstico — cada sessão com foco, prática e plano de ação para aplicar entre os encontros.</div>
         <span class="step-tag">Semanas 2–10</span>
       </div>
-      <div class="step-item">
-        <div class="step-num">SESSÃO 06</div>
+      <div class="step-item" data-rv>
+        <div class="step-num">Sessão 06</div>
         <div class="step-title">Plano de Voo</div>
         <div class="step-desc">Consolidamos os avanços e você sai com um mapa claro dos próximos 90 dias — para continuar evoluindo com autonomia.</div>
         <span class="step-tag">Semana 12</span>
       </div>
     </div>
-    <div style="margin-top:20px;padding:20px 24px;background:#111;border:1px solid #1e1e1e;border-radius:14px;">
-      <p style="font-size:14px;color:#777;line-height:1.7;">
-        ✉️ &nbsp;Entre todas as sessões, você tem acesso direto a mim pelo WhatsApp para dúvidas rápidas — resposta em até 24h úteis.
-        Cada sessão também é gravada e disponibilizada para você rever quando precisar.
-      </p>
+    <div class="incl-strip" data-rv>
+      <p><span class="c">✉</span> Entre todas as sessões, você tem acesso direto a mim pelo WhatsApp para dúvidas rápidas — resposta em até 24h úteis. Cada sessão também é gravada e disponibilizada para você rever quando precisar.</p>
     </div>
   </div>
 </section>
 
 <!-- TEMAS -->
-<section class="temas">
-  <div class="container">
-    <span class="section-tag">O que trabalhamos</span>
-    <h2 class="section-title">Temas que guiam a jornada</h2>
-    <p class="section-sub">A combinação certa é definida depois do diagnóstico — você não passa por temas que não fazem sentido para o seu momento.</p>
+<section class="std temas">
+  <div class="wrap">
+    <div class="shead">
+      <span class="section-tag" data-rv>04 / O que trabalhamos</span>
+      <h2 class="section-title" data-rv>Temas que guiam a <em>jornada.</em></h2>
+      <p class="section-sub" data-rv>A combinação certa é definida depois do diagnóstico — você não passa por temas que não fazem sentido para o seu momento.</p>
+    </div>
     <div class="temas-grid">
-      <div class="tema-card">
+      <div class="tema-card" data-rv>
         <div class="tema-icon">🧭</div>
         <div>
           <h4>Autoconhecimento profissional</h4>
           <p>Valores, forças e padrões que se repetem — entender quem você é para decidir melhor.</p>
         </div>
       </div>
-      <div class="tema-card">
+      <div class="tema-card" data-rv>
         <div class="tema-icon">🎯</div>
         <div>
           <h4>Clareza de direção</h4>
           <p>Visão de carreira a médio prazo e filtro para decidir o que faz sentido para você.</p>
         </div>
       </div>
-      <div class="tema-card">
+      <div class="tema-card" data-rv>
         <div class="tema-icon">📣</div>
         <div>
           <h4>Posicionamento e marca pessoal</h4>
           <p>Como você é visto hoje e como quer ser percebido — LinkedIn, narrativa e presença.</p>
         </div>
       </div>
-      <div class="tema-card">
+      <div class="tema-card" data-rv>
         <div class="tema-icon">🔀</div>
         <div>
           <h4>Estratégia de transição</h4>
           <p>Plano de migração realista sem precisar largar tudo de uma vez.</p>
         </div>
       </div>
-      <div class="tema-card">
+      <div class="tema-card" data-rv>
         <div class="tema-icon">📈</div>
         <div>
           <h4>Crescimento na carreira atual</h4>
           <p>Visibilidade, comunicação com gestores e como pedir promoção de forma assertiva.</p>
         </div>
       </div>
-      <div class="tema-card">
+      <div class="tema-card" data-rv>
         <div class="tema-icon">⚡</div>
         <div>
           <h4>IA como acelerador</h4>
@@ -782,36 +340,38 @@
         </div>
       </div>
     </div>
-    <div class="tema-obs">
-      💡 <strong>Sobre a IA:</strong> ela aparece como uma ferramenta dentro do processo — não é o foco central da mentoria. O foco é você, sua carreira e seus objetivos.
+    <div class="tema-obs" data-rv>
+      <strong>Sobre a IA:</strong> ela aparece como uma ferramenta dentro do processo — não é o foco central da mentoria. O foco é você, sua carreira e seus objetivos.
     </div>
   </div>
 </section>
 
 <!-- DEPOIMENTOS -->
-<section>
-  <div class="container">
-    <span class="section-tag">Resultados reais</span>
-    <h2 class="section-title">O que dizem quem já passou por aqui</h2>
+<section class="std">
+  <div class="wrap">
+    <div class="shead">
+      <span class="section-tag" data-rv>05 / Resultados reais</span>
+      <h2 class="section-title" data-rv>O que dizem quem já <em>passou por aqui.</em></h2>
+    </div>
     <div class="depoimentos-grid">
 
-      <div class="dep-card">
+      <div class="dep-card" data-rv>
         <div class="dep-stars">★★★★★</div>
         <p class="dep-text">"Ser mentorado pelo Yuri me fez sair de um salário de R$ 3 mil para a primeira experiência em uma multinacional com duplo dígito — e hoje estou na minha segunda experiência, na empresa dos sonhos: L'Oréal."</p>
         <div class="dep-author">
-          <div class="dep-avatar placeholder" style="font-size:18px;font-weight:700;color:#2563eb;">P</div>
+          <div class="dep-avatar">P</div>
           <div>
-            <div class="dep-name"><a href="https://www.linkedin.com/in/ACoAADO2_YAB6vuSkJvgBY51ZCTnpxlxsT1WzQw" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Perlyson Alves ↗</a></div>
+            <div class="dep-name"><a href="https://www.linkedin.com/in/ACoAADO2_YAB6vuSkJvgBY51ZCTnpxlxsT1WzQw" target="_blank" rel="noopener">Perlyson Alves ↗</a></div>
             <div class="dep-role">Executivo na L'Oréal · Vendas</div>
           </div>
         </div>
       </div>
 
-      <div class="dep-card">
+      <div class="dep-card" data-rv>
         <div class="dep-stars">★★★★★</div>
         <p class="dep-text">"O Yuri me ajudou na minha promoção. Eu tinha uma proposta na mão de outra empresa e ele me ajudou a transformar isso em uma grande oportunidade. Hoje sou gerente em uma multinacional."</p>
         <div class="dep-author">
-          <div class="dep-avatar placeholder" style="font-size:18px;font-weight:700;color:#2563eb;">A</div>
+          <div class="dep-avatar">A</div>
           <div>
             <div class="dep-name">Angélica Santana</div>
             <div class="dep-role">Gerente · Vendas</div>
@@ -819,11 +379,11 @@
         </div>
       </div>
 
-      <div class="dep-card">
+      <div class="dep-card" data-rv>
         <div class="dep-stars">★★★★★</div>
         <p class="dep-text">"Fui promovido de vendedor para supervisor graças ao impacto da minha mentoria com o Yuri."</p>
         <div class="dep-author">
-          <div class="dep-avatar placeholder" style="font-size:18px;font-weight:700;color:#2563eb;">C</div>
+          <div class="dep-avatar">C</div>
           <div>
             <div class="dep-name">Cícero Gomes</div>
             <div class="dep-role">Supervisor · Vendas</div>
@@ -836,40 +396,42 @@
 </section>
 
 <!-- FAQ -->
-<section class="faq">
-  <div class="container">
-    <span class="section-tag">Dúvidas frequentes</span>
-    <h2 class="section-title" style="text-align:center;">Perguntas que sempre aparecem</h2>
-    <div class="faq-list">
+<section class="std faq">
+  <div class="wrap">
+    <div class="shead" style="text-align:center;align-items:center;margin-left:auto;margin-right:auto;">
+      <span class="section-tag" data-rv>06 / Dúvidas frequentes</span>
+      <h2 class="section-title" data-rv>Perguntas que <em>sempre aparecem.</em></h2>
+    </div>
+    <div class="faq-list" data-rv>
 
       <div class="faq-item">
         <button class="faq-q">A mentoria é indicada para qualquer área profissional? <span class="arrow">+</span></button>
-        <div class="faq-a">Sim. O processo não é específico de uma área — ele trabalha carreira, posicionamento e estratégia pessoal. Já atendi profissionais de vendas, marketing, tecnologia, saúde, educação, direito e negócios. O que importa é o seu momento e objetivo, não a sua área.</div>
+        <div class="faq-a"><div class="faq-a-inner">Sim. O processo não é específico de uma área — ele trabalha carreira, posicionamento e estratégia pessoal. Já atendi profissionais de vendas, marketing, tecnologia, saúde, educação, direito e negócios. O que importa é o seu momento e objetivo, não a sua área.</div></div>
       </div>
 
       <div class="faq-item">
         <button class="faq-q">Como as sessões acontecem? <span class="arrow">+</span></button>
-        <div class="faq-a">Todas as sessões são online, pelo Google Meet ou Zoom, com duração de 60 a 90 minutos. A frequência é quinzenal (a cada duas semanas), mas pode ser ajustada conforme o seu ritmo. Cada sessão é gravada e enviada para você em até 24 horas.</div>
+        <div class="faq-a"><div class="faq-a-inner">Todas as sessões são online, pelo Google Meet ou Zoom, com duração de 60 a 90 minutos. A frequência é quinzenal (a cada duas semanas), mas pode ser ajustada conforme o seu ritmo. Cada sessão é gravada e enviada para você em até 24 horas.</div></div>
       </div>
 
       <div class="faq-item">
         <button class="faq-q">Preciso saber usar IA para fazer a mentoria? <span class="arrow">+</span></button>
-        <div class="faq-a">Não. A inteligência artificial aparece como uma ferramenta dentro do processo — não é requisito nem o foco principal. Se você nunca usou IA no trabalho, faz parte da jornada aprender o que faz sentido para a sua realidade.</div>
+        <div class="faq-a"><div class="faq-a-inner">Não. A inteligência artificial aparece como uma ferramenta dentro do processo — não é requisito nem o foco principal. Se você nunca usou IA no trabalho, faz parte da jornada aprender o que faz sentido para a sua realidade.</div></div>
       </div>
 
       <div class="faq-item">
         <button class="faq-q">Qual é o investimento? <span class="arrow">+</span></button>
-        <div class="faq-a">O investimento é apresentado na nossa conversa inicial — depois que eu entendo o seu momento e objetivos. Não trabalho com valor fixo para todo mundo porque cada mentoria tem um escopo diferente. Agende a sessão gratuita e conversamos sobre isso.</div>
+        <div class="faq-a"><div class="faq-a-inner">O investimento é apresentado na nossa conversa inicial — depois que eu entendo o seu momento e objetivos. Não trabalho com valor fixo para todo mundo porque cada mentoria tem um escopo diferente. Agende a sessão gratuita e conversamos sobre isso.</div></div>
       </div>
 
       <div class="faq-item">
         <button class="faq-q">O que acontece na sessão gratuita? <span class="arrow">+</span></button>
-        <div class="faq-a">É uma conversa de 30 minutos onde você me conta o seu momento profissional e eu te ajudo a enxergar com mais clareza o que está acontecendo. Sem pitch de vendas nos primeiros minutos — a ideia é que você saia com valor, independente de contratar ou não.</div>
+        <div class="faq-a"><div class="faq-a-inner">É uma conversa de 30 minutos onde você me conta o seu momento profissional e eu te ajudo a enxergar com mais clareza o que está acontecendo. Sem pitch de vendas nos primeiros minutos — a ideia é que você saia com valor, independente de contratar ou não.</div></div>
       </div>
 
       <div class="faq-item">
         <button class="faq-q">Consigo resultados em 3 meses? <span class="arrow">+</span></button>
-        <div class="faq-a">Depende do que você chama de resultado. Clareza de direção e um plano sólido: sim, em 3 meses. Promoção ou mudança de emprego: podem acontecer durante a mentoria ou ser o próximo passo imediato após ela. O processo te coloca em movimento — os resultados concretos variam conforme o contexto de cada pessoa.</div>
+        <div class="faq-a"><div class="faq-a-inner">Depende do que você chama de resultado. Clareza de direção e um plano sólido: sim, em 3 meses. Promoção ou mudança de emprego: podem acontecer durante a mentoria ou ser o próximo passo imediato após ela. O processo te coloca em movimento — os resultados concretos variam conforme o contexto de cada pessoa.</div></div>
       </div>
 
     </div>
@@ -878,34 +440,51 @@
 
 <!-- CTA FINAL -->
 <section class="cta-final" id="agendar">
-  <div class="container">
-    <h2>Pronto(a) para parar de improvisar e <em>construir com estratégia?</em></h2>
-    <p>A sessão gratuita não tem compromisso. É uma conversa — e você já sai com alguma clareza sobre o seu próximo passo.</p>
-    <a href="formulario-pre-call.html" class="btn-primary" style="font-size:17px;padding:18px 40px;">
-      Agendar minha sessão gratuita →
-    </a>
-    <div class="cta-chips">
-      <span class="chip">✓ 30 minutos</span>
-      <span class="chip">✓ Sem compromisso</span>
-      <span class="chip">✓ 100% online</span>
-      <span class="chip">✓ Vagas limitadas</span>
+  <div class="wrap">
+    <div class="eyebrow" data-rv>O primeiro passo</div>
+    <h2 data-rv>Pronto(a) para parar de improvisar e <em>construir com estratégia?</em></h2>
+    <p class="lead" data-rv>A sessão gratuita não tem compromisso. É uma conversa — e você já sai com alguma clareza sobre o seu próximo passo.</p>
+    <a href="formulario-pre-call.html" class="btn" data-rv style="font-size:1.1rem;padding:20px 40px;">Agendar minha sessão gratuita <span class="arr">→</span></a>
+    <div class="cta-chips" data-rv>
+      <span class="chip"><span class="c">✓</span> 30 minutos</span>
+      <span class="chip"><span class="c">✓</span> Sem compromisso</span>
+      <span class="chip"><span class="c">✓</span> 100% online</span>
+      <span class="chip"><span class="c">✓</span> Vagas limitadas</span>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2026 Yuri Chaves · <a href="https://yurichaves.com.br">yurichaves.com.br</a> · Mentoria de Carreira</p>
+  <div class="logo" style="font-size:1rem;margin-bottom:8px;">Yuri Chaves<span style="color:var(--gold)">.</span></div>
+  © 2026 Yuri Chaves · <a href="https://yurichaves.com.br">yurichaves.com.br</a> · Mentoria de Carreira
 </footer>
 
-<!-- FAQ Script -->
 <script>
-  document.querySelectorAll('.faq-q').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.faq-item');
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
+  // Nav stuck
+  const nav = document.getElementById('nav');
+  addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 60));
+
+  // Reveal
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('[data-rv]').forEach(el => io.observe(el));
+
+  // FAQ
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.closest('.faq-item');
+      const a = item.querySelector('.faq-a');
+      const open = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(o => {
+        o.classList.remove('open');
+        o.querySelector('.faq-a').style.maxHeight = null;
+      });
+      if (!open) {
+        item.classList.add('open');
+        a.style.maxHeight = a.scrollHeight + 'px';
+      }
     });
   });
 </script>
