@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedback da Aula · Mentoria Yuri Chaves</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand: #1a1a2e;
+      --accent: #e94560;
+      --accent-light: #ff6b6b;
+      --bg: #f7f8fc;
+      --card: #ffffff;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 16px 60px;
+    }
+
+    /* ── Header ── */
+    .header {
+      text-align: center;
+      margin-bottom: 36px;
+      max-width: 560px;
+    }
+    .header .badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+    .header h1 {
+      font-size: clamp(24px, 5vw, 32px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .header p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ── Card / Form ── */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 24px rgba(0,0,0,.07);
+      padding: 36px 40px;
+      width: 100%;
+      max-width: 580px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--accent);
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .field { margin-bottom: 22px; }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    label span.optional {
+      font-weight: 400;
+      color: var(--muted);
+      font-size: 12px;
+      margin-left: 4px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea,
+    select {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      background: #fff;
+      transition: border-color .2s;
+      outline: none;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(233,69,96,.1);
+    }
+    textarea { resize: vertical; min-height: 90px; }
+
+    /* ── Row de 2 colunas ── */
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 480px) { .row-2 { grid-template-columns: 1fr; } .card { padding: 24px 20px; } }
+
+    /* ── Estrelas ── */
+    .stars {
+      display: flex;
+      gap: 6px;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+    .stars input { display: none; }
+    .stars label {
+      font-size: 28px;
+      cursor: pointer;
+      color: #d1d5db;
+      transition: color .15s;
+      margin: 0;
+      font-weight: 400;
+    }
+    .stars input:checked ~ label,
+    .stars label:hover,
+    .stars label:hover ~ label { color: #f59e0b; }
+
+    /* ── Radio cards ── */
+    .radio-group { display: flex; flex-wrap: wrap; gap: 10px; }
+    .radio-group input { display: none; }
+    .radio-group label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .2s;
+      margin: 0;
+    }
+    .radio-group input:checked + label {
+      border-color: var(--accent);
+      background: rgba(233,69,96,.07);
+      color: var(--accent);
+    }
+    .radio-group label:hover { border-color: var(--accent-light); }
+
+    /* ── Divider ── */
+    .divider { border: none; border-top: 1.5px solid var(--border); margin: 28px 0; }
+
+    /* ── Submit ── */
+    .btn-submit {
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+      letter-spacing: .02em;
+    }
+    .btn-submit:hover { background: #c73652; }
+    .btn-submit:active { transform: scale(.98); }
+
+    /* ── Mensagem de sucesso ── */
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .success-msg .icon { font-size: 52px; margin-bottom: 16px; }
+    .success-msg h2 { font-size: 22px; margin-bottom: 8px; }
+    .success-msg p { color: var(--muted); font-size: 14px; }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 28px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+    .footer a { color: var(--muted); }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="badge">Mentoria · Yuri Chaves</div>
+    <h1>Como foi a aula de hoje? 🎯</h1>
+    <p>Leva menos de 2 minutos. Seu feedback me ajuda a tornar cada aula melhor para você.</p>
+  </div>
+
+  <div class="card">
+
+    <!-- Mensagem de sucesso (exibida após envio) -->
+    <div class="success-msg" id="success">
+      <div class="icon">✅</div>
+      <h2>Obrigado pelo feedback!</h2>
+      <p>Sua opinião é muito importante para continuar evoluindo a mentoria.</p>
+    </div>
+
+    <!-- Formulário -->
+    <form
+      id="feedback-form"
+      action="https://formspree.io/f/xzdqpdkj"
+      method="POST"
+    >
+
+      <!-- Seção 1: Identificação -->
+      <p class="section-label">Identificação</p>
+
+      <div class="row-2">
+        <div class="field">
+          <label for="nome">Seu nome</label>
+          <input type="text" id="nome" name="nome" placeholder="Ex.: Ana Paula" required />
+        </div>
+        <div class="field">
+          <label for="data">Data da aula</label>
+          <input type="date" id="data" name="data_aula" required />
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Seção 2: Conteúdo -->
+      <p class="section-label">Sobre o Conteúdo</p>
+
+      <div class="field">
+        <label>Como você avaliaria o conteúdo desta aula?</label>
+        <div class="stars">
+          <input type="radio" id="s5" name="nota_conteudo" value="5" required />
+          <label for="s5" title="Excelente">★</label>
+          <input type="radio" id="s4" name="nota_conteudo" value="4" />
+          <label for="s4" title="Muito bom">★</label>
+          <input type="radio" id="s3" name="nota_conteudo" value="3" />
+          <label for="s3" title="Bom">★</label>
+          <input type="radio" id="s2" name="nota_conteudo" value="2" />
+          <label for="s2" title="Regular">★</label>
+          <input type="radio" id="s1" name="nota_conteudo" value="1" />
+          <label for="s1" title="Precisa melhorar">★</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>O conteúdo ficou claro e fácil de entender?</label>
+        <div class="radio-group">
+          <input type="radio" id="claro-sim" name="clareza" value="Sim, muito claro" required />
+          <label for="claro-sim">✅ Sim, muito claro</label>
+          <input type="radio" id="claro-mais-ou-menos" name="clareza" value="Mais ou menos" />
+          <label for="claro-mais-ou-menos">🤔 Mais ou menos</label>
+          <input type="radio" id="claro-nao" name="clareza" value="Precisei de mais explicação" />
+          <label for="claro-nao">❌ Precisei de mais explicação</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Você se sente preparado para aplicar o que aprendeu hoje?</label>
+        <div class="radio-group">
+          <input type="radio" id="aplic-sim" name="aplicabilidade" value="Sim, consigo aplicar" required />
+          <label for="aplic-sim">💪 Sim, consigo aplicar</label>
+          <input type="radio" id="aplic-parcial" name="aplicabilidade" value="Com um pouco de suporte" />
+          <label for="aplic-parcial">🙂 Com um pouco de suporte</label>
+          <input type="radio" id="aplic-nao" name="aplicabilidade" value="Ainda preciso praticar mais" />
+          <label for="aplic-nao">📚 Preciso praticar mais</label>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Seção 3: Tempo e Ritmo -->
+      <p class="section-label">Tempo e Ritmo</p>
+
+      <div class="field">
+        <label>O tempo dedicado à aula foi adequado?</label>
+        <div class="radio-group">
+          <input type="radio" id="tempo-curto" name="tempo" value="Muito curto" required />
+          <label for="tempo-curto">⏩ Muito curto</label>
+          <input type="radio" id="tempo-ok" name="tempo" value="Adequado" />
+          <label for="tempo-ok">✅ Adequado</label>
+          <input type="radio" id="tempo-longo" name="tempo" value="Um pouco longo" />
+          <label for="tempo-longo">⏳ Um pouco longo</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>O ritmo da aula foi…</label>
+        <div class="radio-group">
+          <input type="radio" id="ritmo-rapido" name="ritmo" value="Muito rápido" required />
+          <label for="ritmo-rapido">🚀 Muito rápido</label>
+          <input type="radio" id="ritmo-certo" name="ritmo" value="Na medida certa" />
+          <label for="ritmo-certo">👌 Na medida certa</label>
+          <input type="radio" id="ritmo-lento" name="ritmo" value="Um pouco lento" />
+          <label for="ritmo-lento">🐢 Um pouco lento</label>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Seção 4: Abertas (rápidas) -->
+      <p class="section-label">Pontos Livres</p>
+
+      <div class="field">
+        <label for="destaque">O que você mais gostou desta aula?</label>
+        <textarea id="destaque" name="destaque" placeholder="Ex.: O exemplo prático, a clareza na explicação..."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="melhoria">Tem algo que poderia ser melhor? <span class="optional">(opcional)</span></label>
+        <textarea id="melhoria" name="melhoria" placeholder="Fique à vontade para sugerir melhorias..."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="proxima">Qual tema você gostaria de ver na próxima aula? <span class="optional">(opcional)</span></label>
+        <input type="text" id="proxima" name="proxima_aula" placeholder="Ex.: Criação de conteúdo com IA, ChatGPT avançado..." />
+      </div>
+
+      <button type="submit" class="btn-submit">Enviar Feedback →</button>
+
+    </form>
+  </div>
+
+  <p class="footer">
+    Mentoria <a href="https://yurichaves.com.br" target="_blank">yurichaves.com.br</a> · Seus dados são usados apenas para melhorar as aulas.
+  </p>
+
+  <script>
+    // Pré-preenche a data de hoje
+    const dataInput = document.getElementById('data');
+    if (dataInput) {
+      dataInput.valueAsDate = new Date();
+    }
+
+    // Tratamento do envio com Formspree (AJAX)
+    const form = document.getElementById('feedback-form');
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const btn = form.querySelector('.btn-submit');
+      btn.textContent = 'Enviando...';
+      btn.disabled = true;
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' }
+        });
+
+        if (response.ok) {
+          form.style.display = 'none';
+          document.getElementById('success').style.display = 'block';
+        } else {
+          btn.textContent = 'Erro ao enviar. Tente novamente.';
+          btn.disabled = false;
+        }
+      } catch {
+        btn.textContent = 'Erro de conexão. Tente novamente.';
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
