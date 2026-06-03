@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análise Profunda de LinkedIn — Yuri Chaves</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:       #0A0F1E;
+    --deep:       #060A14;
+    --gold:       #C9A84C;
+    --gold-light: #F0D080;
+    --white:      #F7F5F0;
+    --muted:      #7A7E96;
+    --line:       rgba(201,168,76,0.18);
+    --blue:       rgba(37,99,235,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--deep);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    height: 3px;
+    background: linear-gradient(to right, transparent 5%, var(--gold) 40%, var(--gold-light) 60%, transparent 95%);
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(6,10,20,0.95);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .nav-logo span { color: var(--gold-light); font-style: italic; }
+  .nav-handle {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+  .nav-cta {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    border-radius: 3px;
+    padding: 9px 18px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: 80px 32px 72px;
+    text-align: center;
+    background: var(--navy);
+  }
+  .hero-glow-blue {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(37,99,235,0.13) 0%, transparent 65%);
+    top: -200px; right: -150px;
+    pointer-events: none;
+  }
+  .hero-glow-gold {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 65%);
+    bottom: -100px; left: -80px;
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .hero-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50%      { opacity:0.35; transform:scale(0.6); }
+  }
+  .hero-eyebrow-text {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 7vw, 64px);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero-sub {
+    font-size: clamp(14px, 2.5vw, 17px);
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 520px;
+    margin: 0 auto 40px;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-cta {
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    border-radius: 4px;
+    padding: 16px 40px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(201,168,76,0.25);
+  }
+  .hero-cta:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(201,168,76,0.35);
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 20px;
+    font-size: 11px;
+    color: var(--muted);
+    position: relative;
+    z-index: 2;
+  }
+  .hero-badge::before {
+    content: '⚡';
+    font-size: 11px;
+  }
+
+  /* ── SECTION BASE ── */
+  section {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 64px 32px;
+  }
+  .section-tag {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-tag::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 4vw, 36px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .section-title em { font-style: italic; color: var(--gold-light); }
+  .section-sub {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--line);
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  /* ── STEPS ── */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: flex;
+    gap: 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(201,168,76,0.07);
+    align-items: flex-start;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .step.visible { opacity: 1; transform: translateY(0); }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: rgba(201,168,76,0.18);
+    line-height: 1;
+    min-width: 36px;
+    padding-top: 2px;
+  }
+  .step-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .step-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ── DELIVERABLES ── */
+  .deliverables {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 480px) { .deliverables { grid-template-columns: 1fr; } }
+  .deliv-card {
+    background: rgba(201,168,76,0.04);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 6px;
+    padding: 20px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .deliv-card.visible { opacity: 1; transform: translateY(0); }
+  .deliv-icon { font-size: 20px; margin-bottom: 10px; }
+  .deliv-title { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+  .deliv-desc { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+
+  /* ── FOR WHOM ── */
+  .for-whom-bg {
+    background: var(--navy);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .for-list { display: flex; flex-direction: column; gap: 14px; }
+  .for-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--white);
+    line-height: 1.55;
+  }
+  .for-check {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--gold);
+  }
+
+  /* ── AUTHOR ── */
+  .author-card {
+    background: rgba(201,168,76,0.04);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 32px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  @media (max-width: 520px) { .author-card { flex-direction: column; } }
+  .author-initials {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.05));
+    border: 1.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--gold-light);
+    flex-shrink: 0;
+  }
+  .author-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .author-role {
+    font-size: 12px;
+    color: var(--gold);
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+  .author-bio {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .author-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+  }
+  .author-tag {
+    font-size: 10px;
+    color: var(--muted);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 3px;
+    padding: 3px 8px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── FINAL CTA ── */
+  .final-cta {
+    text-align: center;
+    background: var(--navy);
+    border-top: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .final-cta-glow {
+    position: absolute;
+    width: 500px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .final-cta-inner { position: relative; z-index: 2; }
+  .final-cta h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 4.5vw, 40px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  .final-cta h2 em { font-style: italic; color: var(--gold-light); }
+  .final-cta p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 32px;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .final-cta p strong { color: var(--gold-light); font-weight: 600; }
+  .final-btn-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .btn-primary {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    border-radius: 4px;
+    padding: 16px 48px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    box-shadow: 0 4px 24px rgba(201,168,76,0.2);
+    width: 100%;
+    max-width: 320px;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-secondary {
+    display: inline-block;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 13px 48px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    text-decoration: none;
+    transition: color 0.2s, border-color 0.2s;
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+  }
+  .btn-secondary:hover { color: var(--white); border-color: rgba(201,168,76,0.3); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 24px 32px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .foot-name { font-size: 12px; font-weight: 600; color: var(--white); }
+  .foot-handle { font-size: 11px; color: var(--muted); }
+  .foot-right { font-size: 10px; color: rgba(201,168,76,0.4); letter-spacing: 1px; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<div class="topbar"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Yuri <span>Chaves</span></div>
+  <span class="nav-handle">@yuri.chavs</span>
+  <a href="https://instagram.com/yuri.chavs" class="nav-cta" target="_blank">Falar no Direct</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow-blue"></div>
+  <div class="hero-glow-gold"></div>
+
+  <div class="hero-eyebrow">
+    <div class="hero-dot"></div>
+    <span class="hero-eyebrow-text">Serviço exclusivo</span>
+  </div>
+
+  <h1>Seu LinkedIn está<br>te <em>custando vagas.</em></h1>
+
+  <p class="hero-sub">
+    A maioria dos profissionais não sabe que seu perfil repele recrutadores. Faço uma análise cirúrgica e te entrego exatamente o que corrigir, com prioridades claras e textos prontos para usar.
+  </p>
+
+  <a href="https://instagram.com/yuri.chavs" class="hero-cta" target="_blank">
+    Quero minha análise →
+  </a>
+  <div class="hero-badge">Entrega em até 48 horas úteis</div>
+</div>
+
+<!-- WHAT IS INCLUDED -->
+<section>
+  <div class="section-tag">O que está incluso</div>
+  <h2 class="section-title">O que eu vou<br><em>fazer pelo seu perfil</em></h2>
+  <p class="section-sub">Não são sugestões genéricas. É uma análise individual, com olhos de quem conhece o mercado de Consumer Goods e sabe o que recrutadores realmente buscam.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div>
+        <div class="step-title">Diagnóstico completo do perfil</div>
+        <div class="step-desc">Foto, banner, headline, Sobre, experiências, habilidades e recomendações — cada seção avaliada com olhos de recrutador sênior e com foco no que o algoritmo do LinkedIn prioriza.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div>
+        <div class="step-title">Score de visibilidade e completude</div>
+        <div class="step-desc">Identifico os gaps que fazem o algoritmo te ignorar nas buscas. Você sabe exatamente em que posição está e o que muda para aparecer mais.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div>
+        <div class="step-title">Reescrita de Headline e Sobre</div>
+        <div class="step-desc">Entrego o texto pronto — posicionador, com autoridade e calibrado para o seu momento de carreira. Você só copia e cola.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div>
+        <div class="step-title">Plano de melhoria priorizado</div>
+        <div class="step-desc">Lista de ações ranqueadas por impacto real. Você sabe o que fazer primeiro e por quê — sem achismo, sem lista genérica.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DELIVERABLES -->
+<section>
+  <div class="section-tag">O que você recebe</div>
+
+  <div class="deliverables">
+    <div class="deliv-card">
+      <div class="deliv-icon">📄</div>
+      <div class="deliv-title">Relatório em PDF</div>
+      <div class="deliv-desc">Documento detalhado com análise completa e plano de ação por seção</div>
+    </div>
+    <div class="deliv-card">
+      <div class="deliv-icon">✍️</div>
+      <div class="deliv-title">Textos prontos</div>
+      <div class="deliv-desc">Headline e Sobre reescritos — só copiar, colar e publicar</div>
+    </div>
+    <div class="deliv-card">
+      <div class="deliv-icon">🎯</div>
+      <div class="deliv-title">Foco em resultado</div>
+      <div class="deliv-desc">Ações priorizadas por impacto real na sua visibilidade para recrutadores</div>
+    </div>
+    <div class="deliv-card">
+      <div class="deliv-icon">⚡</div>
+      <div class="deliv-title">Entrega em 48h</div>
+      <div class="deliv-desc">Análise completa entregue em até 2 dias úteis após o envio do perfil</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FOR WHOM -->
+<div class="for-whom-bg">
+  <section>
+    <div class="section-tag">Para quem é</div>
+    <h2 class="section-title">Esse serviço é <em>para você</em> se...</h2>
+
+    <div class="for-list">
+      <div class="for-item">
+        <div class="for-check">✓</div>
+        Você está buscando uma promoção ou nova oportunidade e quer que recrutadores te encontrem primeiro
+      </div>
+      <div class="for-item">
+        <div class="for-check">✓</div>
+        Seu perfil existe há anos mas nunca foi revisado com critérios profissionais de mercado
+      </div>
+      <div class="for-item">
+        <div class="for-check">✓</div>
+        Você sente que seu perfil não reflete o seu real nível de experiência e entrega
+      </div>
+      <div class="for-item">
+        <div class="for-check">✓</div>
+        Você quer posicionamento claro — não apenas um perfil "completo", mas um que comunica autoridade
+      </div>
+      <div class="for-item">
+        <div class="for-check">✓</div>
+        Você prefere receber o trabalho pronto do que estudar como fazer sozinho
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- AUTHOR -->
+<section>
+  <div class="section-tag">Quem faz a análise</div>
+
+  <div class="author-card">
+    <div class="author-initials">YC</div>
+    <div>
+      <div class="author-name">Yuri Chaves</div>
+      <div class="author-role">Senior Sales Manager — 13+ anos em Consumer Goods</div>
+      <div class="author-bio">
+        Passei por P&G e General Mills, liderando equipes e distribuidores em toda a região Norte e Nordeste. Ao longo de mais de uma década no mercado, aprendi a diferença entre um profissional que aparece e um que é encontrado. Essa análise é o resultado disso.
+      </div>
+      <div class="author-tags">
+        <span class="author-tag">P&G</span>
+        <span class="author-tag">General Mills</span>
+        <span class="author-tag">Consumer Goods</span>
+        <span class="author-tag">Liderança</span>
+        <span class="author-tag">Norte/Nordeste</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="final-cta">
+  <div class="final-cta-glow"></div>
+  <section class="final-cta-inner">
+    <h2>Pronto para aparecer<br>para os <em>recrutadores certos?</em></h2>
+    <p>
+      Mande <strong>"LINKEDIN"</strong> no direct do Instagram e eu te explico como funciona. Vagas não esperam — e nem seu perfil deveria.
+    </p>
+    <div class="final-btn-group">
+      <a href="https://instagram.com/yuri.chavs" class="btn-primary" target="_blank">
+        Falar no Direct →
+      </a>
+      <a href="https://instagram.com/yuri.chavs" class="btn-secondary" target="_blank">
+        Ver perfil no Instagram
+      </a>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="foot-name">Yuri Chaves</div>
+    <div class="foot-handle">@yuri.chavs · yurichaves.com.br</div>
+  </div>
+  <div class="foot-right">Análise Profunda de LinkedIn</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.step, .deliv-card').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
