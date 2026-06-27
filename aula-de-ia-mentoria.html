@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)file:///C:/Users/mktyu/Downloads/aula-de-ia-mentoria_1.html -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aula de IA | O que você quer ver?</title>
+<meta name="description" content="Sua vaga já está confirmada. Me conta em 2 minutos o que você quer aprender na Aula de IA. Isso tornará a sua experiência ainda melhor.">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./aula-de-ia-mentoria_files/css2" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0814; --bg-2:#0E0B1A; --surface:#15111F; --surface-2:#1C1730;
+    --line:#2A2340; --violet:#7C3AED; --violet-200:#A78BFA;
+    --gold:#E9B949; --gold-2:#F3D27A; --text:#F5F3FA; --muted:#9B96AD;
+    --ok:#34D399; --radius:14px; --maxw:980px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 700px at 80% -10%, rgba(124,58,237,.22), transparent 60%),
+      radial-gradient(900px 600px at -10% 10%, rgba(233,185,73,.10), transparent 55%),
+      var(--bg);
+    color:var(--text);font-family:'Inter',system-ui,Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  a{color:inherit}
+
+  /* HERO */
+  .hero{padding:64px 0 40px;position:relative;overflow:hidden}
+  .eyebrow{font-family:'Bebas Neue',sans-serif;letter-spacing:.2em;font-size:15px;color:var(--gold);text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;margin:0 0 18px}
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold)}
+  h1{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(40px,8vw,82px);line-height:.96;margin:0 0 20px}
+  h1 .grad{background:linear-gradient(100deg,var(--violet-200),var(--gold-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{font-size:clamp(16px,2.2vw,19px);color:var(--muted);max-width:640px;margin:0 0 30px}
+  .lede strong{color:var(--text);font-weight:600}
+
+ 
+  /* SECTION */
+  .sec{padding:54px 0}
+  .sec-eyebrow{font-family:'Bebas Neue',sans-serif;letter-spacing:.2em;color:var(--gold);font-size:14px;text-transform:uppercase}
+  .sec h2{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(30px,5.5vw,52px);line-height:1;margin:8px 0 10px}
+  .sec .sub{color:var(--muted);max-width:620px;margin:0 0 26px}
+
+  /* FORM */
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px}
+  .field{margin-bottom:20px}
+  .field > label{display:block;font-family:'Bebas Neue',sans-serif;letter-spacing:.08em;font-size:16px;text-transform:uppercase;margin-bottom:8px}
+  .field .opt{color:var(--muted);font-family:'Inter';letter-spacing:0;font-size:12px;text-transform:none;margin-left:6px}
+  input[type=text],input[type=date],input[type=tel],select,textarea{width:100%;background:var(--bg-2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:13px 14px;font-size:15px;font-family:'Inter'}
+  input::placeholder,textarea::placeholder{color:#6f6a82}
+  select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239B96AD' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
+  textarea{min-height:120px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--violet);box-shadow:0 0 0 3px rgba(124,58,237,.25)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{position:relative}
+  .pill input{position:absolute;opacity:0;inset:0;cursor:pointer}
+  .pill span{display:inline-block;padding:11px 16px;border:1px solid var(--line);border-radius:999px;background:var(--bg-2);color:var(--muted);font-size:14px;cursor:pointer;transition:.15s}
+  .pill input:checked + span{border-color:var(--gold);color:var(--text);background:rgba(233,185,73,.14)}
+  .pill input:focus-visible + span{outline:2px solid var(--violet);outline-offset:2px}
+
+  .err{color:#FF8FA3;font-size:13px;margin-top:6px;display:none}
+  .field.invalid .err{display:block}
+  .field.invalid input,.field.invalid select{border-color:#FF6B86}
+
+  /* THANKS */
+  .thanks{display:none;text-align:center;padding:18px 8px}
+  .thanks .ok{font-family:'Anton',sans-serif;font-size:clamp(30px,5vw,46px);text-transform:uppercase;margin:0 0 8px}
+  .thanks .ok span{color:var(--ok)}
+  .thanks p{color:var(--muted);max-width:480px;margin:0 auto 22px}
+
+  /* REFERRAL */
+  .ref{background:linear-gradient(120deg,rgba(124,58,237,.16),rgba(233,185,73,.08));border:1px solid var(--line);border-radius:18px;padding:30px;text-align:center}
+  .ref h2{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(26px,4.5vw,40px);margin:0 0 8px}
+  .ref p{color:var(--muted);max-width:540px;margin:0 auto 22px}
+  .wa{display:inline-flex;align-items:center;gap:10px;font-family:'Bebas Neue',sans-serif;letter-spacing:.08em;font-size:18px;text-transform:uppercase;border-radius:12px;padding:14px 22px;text-decoration:none;transition:transform .15s ease}
+  .wa:hover{transform:translateY(-2px)}
+  .wa.green{background:#25D366;color:#06270f}
+  .wa.ghost{background:transparent;border:1px solid var(--line);color:var(--text);margin-left:10px}
+  .wa:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+  .wa svg{width:20px;height:20px;flex:none}
+
+  footer{padding:40px 0 50px;text-align:center;color:#6f6a82;font-size:13px;border-top:1px solid var(--line);margin-top:10px}
+  footer .brand{font-family:'Bebas Neue',sans-serif;letter-spacing:.16em;color:var(--gold);font-size:18px;text-transform:uppercase}
+
+  @media (max-width:720px){
+    .steps-grid{grid-template-columns:1fr}
+    .two{grid-template-columns:1fr}
+    .wa.ghost{margin-left:0;margin-top:10px}
+    .hero{padding:46px 0 26px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important;scroll-behavior:auto !important}}
+</style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow"><span class="dot"></span> Sua vaga está confirmada </p>
+      <h1>Está chegando a hora<br><span class="grad">de entrarmos em campo.</span></h1>
+      <p class="lede">Você já está dentro. Agora me ajuda a deixar a aula com a sua cara: <strong>me conta o que você quer aprender</strong>. Leva 2 minutos.</p>
+    </div>
+  </header>
+
+  <!-- FORM -->
+  <section class="sec" id="form">
+    <div class="wrap">
+      <p class="sec-eyebrow">Escalação da aula</p>
+      <h2>O que você quer ver?</h2>
+      <p class="sub">Marque tudo que te interessa. Quanto mais específico você for, melhor eu adapto a aula pra você sair sabendo fazer.</p>
+
+      <div class="card">
+        <form id="leadForm" novalidate="">
+
+          <!-- TEMAS: o coração da pesquisa -->
+          <div class="field">
+            <label>O que você quer aprender na aula <span class="opt">(pode marcar várias)</span></label>
+            <div class="pills" id="temas" aria-label="Temas de interesse">
+              <label class="pill"><input type="checkbox" name="tema" value="Criar sites e landing pages"><span>Criar sites e landing pages</span></label>
+              <label class="pill"><input type="checkbox" name="tema" value="Usar IA no trabalho (produtividade)"><span>Usar IA no trabalho</span></label>
+              <label class="pill"><input type="checkbox" name="tema" value="Criar vídeos com IA"><span>Criar vídeos com IA</span></label>
+              <label class="pill"><input type="checkbox" name="tema" value="Editar vídeos"><span>Editar vídeos</span></label>
+              <label class="pill"><input type="checkbox" name="tema" value="Criar imagens e artes"><span>Criar imagens e artes</span></label>
+              <label class="pill"><input type="checkbox" name="tema" value="Automatizar tarefas"><span>Automatizar tarefas</span></label>
+              <label class="pill"><input type="checkbox" name="tema" value="Escrever melhor (conteúdo, posts, copy)"><span>Escrever conteúdo e posts</span></label>
+              <label class="pill"><input type="checkbox" name="tema" value="Fazer prompts que funcionam"><span>Fazer prompts que funcionam</span></label>
+              <label class="pill"><input type="checkbox" name="tema" value="Usar IA no meu negócio e vendas"><span>IA no meu negócio e vendas</span></label>
+              <label class="pill"><input type="checkbox" name="tema" value="Estudar e me organizar com IA"><span>Estudar e me organizar</span></label>
+            </div>
+            <div class="err">Marque pelo menos um tema.</div>
+          </div>
+
+          <div class="field">
+            <label for="prioridade">Se você só pudesse sair sabendo UMA coisa, qual seria? <span class="opt">(opcional)</span></label>
+            <select id="prioridade" name="prioridade">
+              <option value="">Selecione...</option>
+              <option>Criar sites e landing pages</option>
+              <option>Usar IA no trabalho (produtividade)</option>
+              <option>Criar vídeos com IA</option>
+              <option>Editar vídeos</option>
+              <option>Criar imagens e artes</option>
+              <option>Automatizar tarefas</option>
+              <option>Escrever melhor (conteúdo, posts, copy)</option>
+              <option>Fazer prompts que funcionam</option>
+              <option>Usar IA no meu negócio e vendas</option>
+              <option>Estudar e me organizar com IA</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Seu nível com IA hoje</label>
+            <div class="pills" id="nivel" role="radiogroup" aria-label="Nível de conhecimento em IA">
+              <label class="pill"><input type="radio" name="nivel" value="Nunca usei"><span>Nunca usei</span></label>
+              <label class="pill"><input type="radio" name="nivel" value="Já testei, mas travo"><span>Já testei, mas travo</span></label>
+              <label class="pill"><input type="radio" name="nivel" value="Uso no dia a dia"><span>Uso no dia a dia</span></label>
+              <label class="pill"><input type="radio" name="nivel" value="Crio fluxos e automações"><span>Crio fluxos e automações</span></label>
+            </div>
+            <div class="err">Escolha um nível.</div>
+          </div>
+
+          <div class="field">
+            <label for="ferramenta">Ferramenta que mais te interessa</label>
+            <select id="ferramenta" name="ferramenta">
+              <option value="">Selecione...</option>
+              <option>Claude</option>
+              <option>ChatGPT</option>
+              <option>Gemini</option>
+              <option>Geração de imagem (Midjourney, Firefly...)</option>
+              <option>Geração e edição de vídeo (Sora, CapCut, Runway...)</option>
+              <option>Automações (n8n, Make, Zapier)</option>
+              <option>Copilot / IA no trabalho</option>
+              <option>Ainda não sei, me ajuda a escolher</option>
+            </select>
+            <div class="err">Escolha uma ferramenta.</div>
+          </div>
+
+          <div class="two">
+            <div class="field">
+              <label for="nome">Nome</label>
+              <input type="text" id="nome" name="nome" placeholder="Como você quer ser chamado">
+              <div class="err">Me diz seu nome.</div>
+            </div>
+            <div class="field">
+              <label for="nasc">Data de nascimento</label>
+              <input type="date" id="nasc" name="nasc">
+              <div class="err">Preencha a data.</div>
+            </div>
+          </div>
+
+          <div class="two">
+            <div class="field">
+              <label for="prof">Profissão</label>
+              <input type="text" id="prof" name="prof" placeholder="O que você faz hoje">
+              <div class="err">Me conta sua profissão.</div>
+            </div>
+            <div class="field">
+              <label for="wpp">WhatsApp <span class="opt">(opcional, pra eu te achar)</span></label>
+              <input type="tel" id="wpp" name="wpp" placeholder="(83) 9 9999-9999">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="sugestao">Quer pedir algo específico? <span class="opt">(opcional)</span></label>
+            <textarea id="sugestao" name="sugestao" placeholder="Uma dúvida, um problema do seu dia a dia que quer resolver com IA, um exemplo prático que gostaria de ver... escreve à vontade."></textarea>
+          </div>
+
+          <button type="submit" class="cta-primary" style="margin-top:0">Enviar minhas respostas →</button>
+        </form>
+
+        <div class="thanks" id="thanks">
+          <p class="ok">Recebido. <span>Tá em campo!</span></p>
+          <p>Suas respostas já abriram no WhatsApp. É só apertar enviar que eu recebo tudo e monto a aula com a cara da turma. Te vejo em campo.</p>
+          <a class="wa green" id="resend" href="file:///C:/Users/mktyu/Downloads/aula-de-ia-mentoria_1.html#">Não abriu? Reenviar pelo WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <footer>
+    <div class="wrap">
+      <p class="brand">Aula de IA • Yuri Chaves</p>
+          </div>
+  </footer>
+
+<script>
+  var WA = '5582982077042';
+  var form = document.getElementById('leadForm');
+  var thanks = document.getElementById('thanks');
+
+  function markField(el, on){ var f = el ? el.closest('.field') : null; if(f) f.classList.toggle('invalid', on); }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var temas = Array.prototype.slice.call(document.querySelectorAll('input[name=tema]:checked')).map(function(c){return c.value});
+    var prioridade = document.getElementById('prioridade').value;
+    var nivel = (document.querySelector('input[name=nivel]:checked')||{}).value || '';
+    var ferr = document.getElementById('ferramenta').value;
+    var nome = document.getElementById('nome').value.trim();
+    var nasc = document.getElementById('nasc').value;
+    var prof = document.getElementById('prof').value.trim();
+    var wpp  = document.getElementById('wpp').value.trim();
+    var sug  = document.getElementById('sugestao').value.trim();
+
+    var ok = true;
+    document.getElementById('temas').closest('.field').classList.toggle('invalid', temas.length===0); if(temas.length===0) ok=false;
+    document.getElementById('nivel').closest('.field').classList.toggle('invalid', !nivel); if(!nivel) ok=false;
+    markField(document.getElementById('ferramenta'), !ferr); if(!ferr) ok=false;
+    markField(document.getElementById('nome'), !nome); if(!nome) ok=false;
+    markField(document.getElementById('nasc'), !nasc); if(!nasc) ok=false;
+    markField(document.getElementById('prof'), !prof); if(!prof) ok=false;
+
+    if(!ok){ var bad = form.querySelector('.invalid'); if(bad) bad.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+
+    var msg =
+      'AULA DE IA — O que quero ver\n\n' +
+      'Temas: ' + temas.join(', ') + '\n' +
+      (prioridade ? 'Prioridade nº 1: ' + prioridade + '\n' : '') +
+      'Nível de IA: ' + nivel + '\n' +
+      'Ferramenta de interesse: ' + ferr + '\n\n' +
+      'Nome: ' + nome + '\n' +
+      'Nascimento: ' + nasc + '\n' +
+      'Profissão: ' + prof + '\n' +
+      (wpp ? 'WhatsApp: ' + wpp + '\n' : '') +
+      (sug ? '\nPedido específico:\n' + sug : '');
+
+    var url = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg);
+    document.getElementById('resend').href = url;
+    window.open(url, '_blank');
+
+    form.style.display = 'none';
+    thanks.style.display = 'block';
+    thanks.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+
+  form.addEventListener('input', function(e){ var f = e.target.closest('.field'); if(f) f.classList.remove('invalid'); });
+  document.getElementById('temas').addEventListener('change', function(){ this.closest('.field').classList.remove('invalid'); });
+  document.getElementById('nivel').addEventListener('change', function(){ this.closest('.field').classList.remove('invalid'); });
+</script>
+
+
+</body></html>
